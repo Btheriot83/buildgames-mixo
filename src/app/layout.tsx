@@ -3,9 +3,9 @@ import "./globals.css";
 import "./transitions.css";
 
 export const metadata: Metadata = {
-  title: "Hot Metal — Mixo replacement",
+  title: "Hot Metal Press — brief to stamped landing",
   description:
-    "Brief → structured landing page → live edit → stamp static HTML/ZIP. Local SQLite. No accounts.",
+    "Describe your idea. Lock structured landing sections. Edit, preview, stamp HTML/ZIP. Local SQLite. No accounts.",
 };
 
 export default function RootLayout({

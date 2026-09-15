@@ -4,18 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import type { Brief } from "@/lib/types";
-import { SpinningCounter } from "./transitions/SpinningCounter";
 import { ThinkingLine } from "./transitions/ThinkingLine";
-
-const STEPS = [
-  { key: "productName", label: "Name the forme", hint: "Product or page name", placeholder: "Letterpress Co" },
-  { key: "tagline", label: "Set the headline ink", hint: "One sharp promise", placeholder: "Proofs that feel printed" },
-  { key: "audience", label: "Who reads the sheet?", hint: "Audience in plain words", placeholder: "Indie founders shipping one page" },
-  { key: "tone", label: "Press mood", hint: "Tone — editorial, wry, strict…", placeholder: "Editorial, confident" },
-  { key: "offer", label: "The offer lockup", hint: "What they get", placeholder: "Brief → editable page → static export" },
-] as const;
-
-type StepKey = (typeof STEPS)[number]["key"];
 
 const empty: Brief = {
   productName: "",
@@ -25,47 +14,52 @@ const empty: Brief = {
   offer: "",
 };
 
+/** Mixo-bar UX: one idea box → stamp. Optional expand for structured brief. */
 export function CreateFlow() {
   const router = useRouter();
-  const [step, setStep] = useState(0);
+  const [idea, setIdea] = useState("");
+  const [advanced, setAdvanced] = useState(false);
   const [brief, setBrief] = useState<Brief>(empty);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [pressing, setPressing] = useState(false);
+  const [modeNote, setModeNote] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const current = STEPS[step];
-  const value = brief[current.key as StepKey];
-  const progress = ((step + 1) / (STEPS.length + 1)) * 100;
-
-  function next() {
-    const el = document.getElementById("brief-field") as HTMLTextAreaElement | null;
-    const live = (el?.value ?? value).trim();
-    if (!live) {
-      setError("Fill this line before advancing the chase.");
-      return;
-    }
-    const key = current.key as StepKey;
-    setBrief((b) => ({ ...b, [key]: live }));
+  async function submit() {
     setError(null);
-    if (step < STEPS.length - 1) setStep(step + 1);
-    else void submitWith({ ...brief, [key]: live });
-  }
+    const ideaLive = idea.trim();
+    if (!advanced) {
+      if (ideaLive.length < 12) {
+        setError("Give at least one clear sentence about the page.");
+        return;
+      }
+    } else {
+      const missing = (Object.keys(empty) as (keyof Brief)[]).find((k) => !brief[k].trim());
+      if (missing) {
+        setError("Fill every advanced line, or switch back to the single idea box.");
+        return;
+      }
+    }
 
-  async function submitWith(finalBrief: Brief) {
     setLoading(true);
     setPressing(true);
-    setError(null);
     try {
+      const body = advanced
+        ? { brief }
+        : { idea: ideaLive };
       const res = await fetch("/api/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ brief: finalBrief }),
+        body: JSON.stringify(body),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Press jammed");
-      await new Promise((r) => setTimeout(r, 1400));
+      setModeNote(data.meta?.note || null);
+      await new Promise((r) => setTimeout(r, 900));
       router.push(`/projects/${data.project.id}`);
     } catch (e) {
       setPressing(false);
@@ -76,14 +70,11 @@ export function CreateFlow() {
   }
 
   return (
-    <div className="create-flow" aria-label="Create landing page">
+    <div className="create-flow" aria-label="Create landing page from brief">
       <div className="press-meter" aria-hidden>
-        <div className="press-meter-fill" style={{ width: `${progress}%` }} />
+        <div className="press-meter-fill" style={{ width: pressing ? "100%" : "18%" }} />
         <span className="press-meter-label">
-          FORME{" "}
-          <SpinningCounter value={step + 1} pad={2} />
-          {" / "}
-          {String(STEPS.length).padStart(2, "0")}
+          {pressing ? "PULLING PROOF" : "ONE PROMPT"}
         </span>
       </div>
 
@@ -101,63 +92,99 @@ export function CreateFlow() {
             <p className="muted">
               <ThinkingLine active={pressing} />
             </p>
+            {modeNote ? <p className="mono-tag">{modeNote}</p> : null}
           </motion.div>
         ) : (
           <motion.div
-            key={current.key}
-            initial={mounted ? { opacity: 0, x: 24 } : false}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -24 }}
-            transition={{ duration: 0.28 }}
+            key={advanced ? "adv" : "idea"}
+            initial={mounted ? { opacity: 0, y: 10 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.22 }}
             className="create-step"
           >
-            <p className="step-kicker">Brief · line {step + 1}</p>
-            <h2 id="create-label">{current.label}</h2>
-            <p className="muted">{current.hint}</p>
-            <label className="sr-only" htmlFor="brief-field">
-              {current.label}
-            </label>
-            <textarea
-              id="brief-field"
-              rows={step === 4 ? 3 : 2}
-              value={value}
-              placeholder={current.placeholder}
-              onChange={(e) =>
-                setBrief((b) => ({ ...b, [current.key]: e.target.value }))
-              }
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  next();
-                }
-              }}
-              autoFocus
-            />
-            {error && <p className="form-error" role="alert">{error}</p>}
+            <p className="step-kicker">One job · brief → stamped sections</p>
+            <h2 id="create-label">
+              {advanced ? "Five-line brief" : "What should this page sell?"}
+            </h2>
+            <p className="muted">
+              {advanced
+                ? "Name, promise, who it's for, tone, offer — then the same stamp."
+                : "Same job as Mixo: one sentence → a page you can edit and export."}
+            </p>
+
+            {!advanced ? (
+              <>
+                <label className="sr-only" htmlFor="brief-field">
+                  Describe your website idea
+                </label>
+                <textarea
+                  id="brief-field"
+                  rows={4}
+                  value={idea}
+                  placeholder="Phoenix mobile diesel repair — book a bay, see the service map, call from the hero"
+                  onChange={(e) => setIdea(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+                      e.preventDefault();
+                      void submit();
+                    }
+                  }}
+                  autoFocus
+                />
+              </>
+            ) : (
+              <div className="adv-brief-grid">
+                {(
+                  [
+                    ["productName", "Product name", "Letterpress Co"],
+                    ["tagline", "Tagline", "Proofs that feel printed"],
+                    ["audience", "Audience", "Indie founders shipping one page"],
+                    ["tone", "Tone", "Editorial, confident"],
+                    ["offer", "Offer", "Brief → editable page → static export"],
+                  ] as const
+                ).map(([key, label, ph]) => (
+                  <label key={key} className="field" htmlFor={`brief-${key}`}>
+                    {label}
+                    <input
+                      id={key === "productName" ? "brief-field" : `brief-${key}`}
+                      value={brief[key]}
+                      placeholder={ph}
+                      onChange={(e) =>
+                        setBrief((b) => ({ ...b, [key]: e.target.value }))
+                      }
+                    />
+                  </label>
+                ))}
+              </div>
+            )}
+
+            {error && (
+              <p className="form-error" role="alert">
+                {error}
+              </p>
+            )}
+
             <div className="create-actions">
               <button
                 type="button"
                 className="btn-ghost"
-                disabled={step === 0 || loading}
+                disabled={loading}
                 onClick={() => {
                   setError(null);
-                  setStep((s) => Math.max(0, s - 1));
+                  setAdvanced((v) => !v);
                 }}
               >
-                Back
+                {advanced ? "Back to one prompt" : "Use five lines"}
               </button>
               <button
                 type="button"
                 className="btn-acid"
                 data-testid="create-next"
                 disabled={loading}
-                onClick={next}
+                onClick={() => void submit()}
               >
-                {step === STEPS.length - 1
-                  ? loading
-                    ? "Inking…"
-                    : "Pull proof"
-                  : "Next line"}
+                {loading ? "Pulling…" : "Pull proof"}
               </button>
             </div>
           </motion.div>

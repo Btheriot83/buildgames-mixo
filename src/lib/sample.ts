@@ -15,7 +15,7 @@ export function getSampleProject(): Project {
       tagline: "Proofs that feel printed, not generated",
       audience: "Indie founders shipping one sharp landing page",
       tone: "Editorial, confident, slightly mischievous",
-      offer: "Turn a 5-line brief into a publishable page in minutes",
+      offer: "One prompt into a publishable page in minutes",
     },
     sections: [
       {
@@ -23,11 +23,11 @@ export function getSampleProject(): Project {
         type: "hero",
         visible: true,
         eyebrow: "Hot metal · cold storage",
-        headline: "Landing pages with ink still wet",
+        headline: "A page that looks pulled, not pasted",
         subhead:
-          "Brief in. Structured sections out. Edit like a proof sheet — then stamp export and ship static HTML.",
-        primaryCta: "Pull a proof",
-        secondaryCta: "See the forms",
+          "One sentence in. Sections you can rewrite. Preview on the desk, then stamp HTML or ZIP and host it yourself.",
+        primaryCta: "Start from a brief",
+        secondaryCta: "Open the sample",
       },
       {
         id: "features-1",
@@ -37,7 +37,7 @@ export function getSampleProject(): Project {
         items: [
           {
             title: "Brief → structure",
-            body: "No blank canvas panic. A short brief becomes hero, features, proof, CTA, FAQ.",
+            body: "No blank canvas panic. One idea becomes hero, features, proof, and CTA.",
           },
           {
             title: "Edit the formes",
@@ -62,25 +62,9 @@ export function getSampleProject(): Project {
         id: "cta-1",
         type: "cta",
         visible: true,
-        heading: "Ready to pull ink?",
-        body: "One brief. One page. Export and go.",
-        button: "Start a proof",
-      },
-      {
-        id: "faq-1",
-        type: "faq",
-        visible: true,
-        heading: "Press FAQ",
-        items: [
-          {
-            q: "Do I need an AI key?",
-            a: "No. Local templates craft pages without an API. Optional OPENAI_API_KEY upgrades copy tone.",
-          },
-          {
-            q: "Where is my data?",
-            a: "SQLite on disk under ./data. Export anytime. Delete the sample when you are done.",
-          },
-        ],
+        heading: "Ready when the brief is",
+        body: "No account wall. Leave with files.",
+        button: "Write a brief",
       },
       {
         id: "footer-1",

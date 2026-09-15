@@ -16,6 +16,7 @@ export function ProjectEditor({ initial }: { initial: Project }) {
   const [status, setStatus] = useState<"idle" | "saved" | "error">("idle");
   const [message, setMessage] = useState<string | null>(null);
   const [stamp, setStamp] = useState(false);
+  const [restamping, setRestamping] = useState(false);
 
   const active = project.sections.find((s) => s.id === activeId) || project.sections[0];
 
@@ -108,6 +109,35 @@ export function ProjectEditor({ initial }: { initial: Project }) {
     URL.revokeObjectURL(url);
   }
 
+
+  async function restampFromBrief() {
+    setRestamping(true);
+    setMessage(null);
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ brief: project.brief }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Restamp failed");
+      const next = {
+        ...project,
+        sections: data.sections,
+        theme: data.theme || project.theme,
+      };
+      setProject(next);
+      setActiveId(data.sections?.[0]?.id || "");
+      await persist(next);
+      setMessage(data.note || (data.mode === "llm" ? "Restamped with live model" : "Restamped with local templates"));
+    } catch (e) {
+      setStatus("error");
+      setMessage(e instanceof Error ? e.message : "Restamp failed");
+    } finally {
+      setRestamping(false);
+    }
+  }
+
   return (
     <div className="editor-shell">
       <StampOverlay show={stamp} />
@@ -163,6 +193,14 @@ export function ProjectEditor({ initial }: { initial: Project }) {
           <button type="button" className="btn-ghost" onClick={() => void exportJson()}>
             JSON
           </button>
+          <button
+            type="button"
+            className="btn-ghost"
+            disabled={restamping || saving}
+            onClick={() => void restampFromBrief()}
+          >
+            {restamping ? "Restamping…" : "Restamp AI"}
+          </button>
           <button type="button" className="btn-acid" onClick={() => void exportZip()}>
             Stamp ZIP
           </button>
@@ -177,7 +215,7 @@ export function ProjectEditor({ initial }: { initial: Project }) {
 
       <div className="editor-grid">
         <aside className="section-rail" aria-label="Sections">
-          <p className="rail-label">Formes</p>
+          <p className="rail-label">Sections</p>
           {project.sections.map((s, i) => (
             <button
               key={s.id}

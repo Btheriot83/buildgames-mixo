@@ -49,8 +49,12 @@ export function ProjectList({ initial }: { initial: Project[] }) {
   if (projects.length === 0) {
     return (
       <div className="empty-state t-panel-slide" data-open={open ? "true" : "false"}>
-        <h2>No formes on the bed</h2>
-        <p>Start a brief above, or import a previously exported JSON proof.</p>
+        <div className="empty-state-art">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/textures/imagine/empty-type.png" alt="" />
+        </div>
+        <h2>Nothing on the bed yet</h2>
+        <p>Describe an idea above to stamp your first landing — or import a JSON proof.</p>
         <label className="btn-ghost file-btn">
           Import JSON
           <input
@@ -71,7 +75,7 @@ export function ProjectList({ initial }: { initial: Project[] }) {
   return (
     <div className="project-list t-panel-slide" data-open={open ? "true" : "false"}>
       <div className="list-head">
-        <h2>On the bed</h2>
+        <h2>Proofs on the bed</h2>
         <label className="btn-ghost file-btn">
           Import JSON
           <input
