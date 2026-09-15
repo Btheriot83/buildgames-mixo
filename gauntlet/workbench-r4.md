@@ -81,3 +81,27 @@
 - bar A/B: gauntlet/shots-r4/r10-bar-mixo-ab.png
 - verdict: Create title quieter vs field+CTA; Mixo still one H1 only above input.
 - commit: 39ab719
+
+## Dream-loop lock
+- baseline: `.dream-loop/baseline.png` (= `shots-r4/dream-baseline-core.png`)
+- target: `.dream-loop/target.png` (= `shots-r4/dream-target.png`) — refined exact UI screenshot (Higgsfield gpt_image_2_5 from live baseline)
+- critic: close live→target AND vs Mixo bar; Quoin Lock locked; no fake accounts
+
+## transitions.dev recipe → action map
+| Recipe | Fires on |
+| --- | --- |
+| texts-reveal (HeroReveal stagger) | Home hero mount |
+| panel-reveal (t-panel-slide) | Create panel / project list open |
+| thinking-states (ThinkingLine) | Stamp generate in progress |
+| spinning-counter / number-pop (SpinningCounter) | Editor section rail index |
+| success-check | StampOverlay on HTML/ZIP export success |
+| toast | StampOverlay export success; Save "Chase locked" |
+| error-state-shake | CreateFlow validation/API error; ProjectEditor save error |
+| skeleton-reveal | CreateFlow pressing panel while stamping |
+
+## r11 — buttons error-shake + skeleton
+- files: src/app/transitions.css, src/components/CreateFlow.tsx, src/components/StampOverlay.tsx, .gitignore
+- shot: gauntlet/shots-r4/r11-error-shake-skeleton.png
+- recipes: error-state-shake → create validation/API fail; skeleton-reveal → pressing; toast Quoin-flat on export
+- verdict: Feedback is now action-tied not CSS-only; Mixo still quieter empty states.
+- commit: 57c4169

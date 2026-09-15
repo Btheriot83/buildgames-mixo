@@ -26,6 +26,7 @@ export function CreateFlow() {
   const [pressing, setPressing] = useState(false);
   const [modeNote, setModeNote] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [shake, setShake] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -36,12 +37,16 @@ export function CreateFlow() {
     if (!advanced) {
       if (ideaLive.length < 12) {
         setError("Give at least one clear sentence about the page.");
+        setShake(true);
+        window.setTimeout(() => setShake(false), 450);
         return;
       }
     } else {
       const missing = (Object.keys(empty) as (keyof Brief)[]).find((k) => !brief[k].trim());
       if (missing) {
         setError("Fill every advanced line, or switch back to the single idea box.");
+        setShake(true);
+        window.setTimeout(() => setShake(false), 450);
         return;
       }
     }
@@ -63,13 +68,15 @@ export function CreateFlow() {
     } catch (e) {
       setPressing(false);
       setError(e instanceof Error ? e.message : "Failed to create");
+      setShake(true);
+      window.setTimeout(() => setShake(false), 450);
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="create-flow" aria-label="Create landing page from brief">
+    <div className={`create-flow t-error-shake ${shake ? "is-shaking" : ""}`} aria-label="Create landing page from brief">
       <div className="press-meter" aria-hidden>
         <div className="press-meter-fill" style={{ width: pressing ? "100%" : "18%" }} />
         <span className="press-meter-label">
@@ -87,6 +94,11 @@ export function CreateFlow() {
             exit={{ opacity: 0 }}
           >
             <div className="press-ram" aria-hidden />
+            <div className="t-skeleton-stack" aria-hidden>
+              <div className="t-skeleton t-skeleton--lg" />
+              <div className="t-skeleton t-skeleton--md" />
+              <div className="t-skeleton t-skeleton--sm" />
+            </div>
             <p className="pressing-title">Stamping landing…</p>
             <p className="muted">
               <ThinkingLine active={pressing} />

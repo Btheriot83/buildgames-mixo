@@ -45,3 +45,6 @@ data/
 test-results/
 playwright-report/
 docs/*.png
+
+# dream-loop working files
+.dream-loop/

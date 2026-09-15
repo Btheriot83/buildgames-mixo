@@ -271,3 +271,47 @@
 .t-panel-slide, .t-stagger-line, .t-think-text, .t-toast {
   filter: none !important;
 }
+
+
+/* --- error-state-shake (free) — fires on real validation/save errors --- */
+@keyframes t-error-shake-kf {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+.t-error-shake.is-shaking {
+  animation: t-error-shake-kf 420ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-error-shake.is-shaking { animation: none !important; }
+}
+
+/* --- skeleton-reveal (free) — pressing / loading panels --- */
+.t-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper, #e8e2d6);
+  border: 2px solid var(--ink, #11131a);
+  min-height: 12px;
+}
+.t-skeleton::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--acid, #dae278);
+  opacity: 0.35;
+  transform: translateX(-100%);
+  animation: t-skel-sweep 1.1s ease-in-out infinite;
+}
+@keyframes t-skel-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.t-skeleton-stack { display: grid; gap: 10px; }
+.t-skeleton--lg { height: 18px; width: 72%; }
+.t-skeleton--md { height: 14px; width: 88%; }
+.t-skeleton--sm { height: 12px; width: 54%; }
+@media (prefers-reduced-motion: reduce) {
+  .t-skeleton::after { animation: none !important; opacity: 0.2; transform: none; }
+}
