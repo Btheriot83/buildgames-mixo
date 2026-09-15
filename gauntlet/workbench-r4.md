@@ -157,3 +157,9 @@
 - vs target: meter hidden; chips quieter; Stamp landing sole loud control
 - verdict: Closer to Mixo one-CTA fantasy under Quoin acid.
 - commit: 6e1c1f0
+
+## r19 — contrast flat reassert
+- files: src/app/globals.css
+- shot: gauntlet/shots-r4/r19-flat-reassert.png
+- verdict: Flat paper/ink held; no glass/glow. Mixo still uses soft pastel wash (their brand).
+- commit: b0e9525

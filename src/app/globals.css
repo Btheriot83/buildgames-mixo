@@ -1390,3 +1390,23 @@ body {
   min-width: 210px; font-size: 16px; font-weight: 700;
 }
 .home-shell--r4 .press-meter { display: none; } /* target has no meter shout */
+
+/* r19 — contrast flat reassert (Brandon hard bar) */
+.home-shell--r4,
+.home-shell--r4 .top-bar--dream,
+.home-shell--r4 .create-panel,
+.home-shell--r4 .home-demo-preview,
+.home-shell--r4 .btn-acid,
+.home-shell--r4 .btn-ghost {
+  background-image: none;
+}
+.home-shell--r4 {
+  background-color: var(--bone);
+  background-image: url(/textures/paper-grain.svg);
+  background-blend-mode: multiply;
+}
+.home-shell--r4 .home-content--job { padding-top: 28px; }
+.home-shell--r4 .list-head h2 {
+  font-size: 1.25rem; font-family: var(--font-body); font-weight: 700; letter-spacing: -0.01em;
+}
+.home-shell--r4 * { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
