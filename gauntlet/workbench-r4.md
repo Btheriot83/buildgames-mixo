@@ -105,3 +105,10 @@
 - recipes: error-state-shake → create validation/API fail; skeleton-reveal → pressing; toast Quoin-flat on export
 - verdict: Feedback is now action-tied not CSS-only; Mixo still quieter empty states.
 - commit: 57c4169
+
+## r12 — buttons save toast
+- files: src/components/ProjectEditor.tsx
+- shot: gauntlet/shots-r4/r12-save-toast-editor.png
+- recipes: toast → Save success; error-state-shake → Save fail
+- verdict: Desk save now announces with Quoin toast; Mixo still has no press chrome.
+- commit: 11e3bf6

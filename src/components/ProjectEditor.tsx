@@ -16,6 +16,8 @@ export function ProjectEditor({ initial }: { initial: Project }) {
   const [status, setStatus] = useState<"idle" | "saved" | "error">("idle");
   const [message, setMessage] = useState<string | null>(null);
   const [stamp, setStamp] = useState(false);
+  const [saveToast, setSaveToast] = useState(false);
+  const [errShake, setErrShake] = useState(false);
   const [restamping, setRestamping] = useState(false);
 
   const active = project.sections.find((s) => s.id === activeId) || project.sections[0];
@@ -40,9 +42,13 @@ export function ProjectEditor({ initial }: { initial: Project }) {
         setProject(data.project);
         setStatus("saved");
         setMessage("Chase locked");
+        setSaveToast(true);
+        window.setTimeout(() => setSaveToast(false), 1800);
       } catch (e) {
         setStatus("error");
         setMessage(e instanceof Error ? e.message : "Save failed");
+        setErrShake(true);
+        window.setTimeout(() => setErrShake(false), 450);
       } finally {
         setSaving(false);
       }
@@ -146,8 +152,14 @@ export function ProjectEditor({ initial }: { initial: Project }) {
   }
 
   return (
-    <div className="editor-shell">
+    <div className={`editor-shell t-error-shake ${errShake ? "is-shaking" : ""}`}>
       <StampOverlay show={stamp} />
+      <div className={`t-toast ${saveToast ? "is-open" : ""}`} role="status" style={{
+        position: "fixed", bottom: "1.5rem", left: "50%", translate: "-50% 0",
+        padding: "0.65rem 1.1rem", border: "2px solid var(--ink)", background: "var(--acid)",
+        color: "var(--ink)", fontFamily: "var(--font-body)", fontSize: "14px", fontWeight: 600,
+        zIndex: 60, boxShadow: "4px 4px 0 var(--ink)"
+      }}>Chase locked — desk saved</div>
       <header className="editor-top">
         <div>
           <p className="mono-tag">Proof desk · brief stamped · export ready</p>
