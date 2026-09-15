@@ -93,6 +93,14 @@
   ],
   "workbench": "apps/mixo/gauntlet/workbench-r4.md",
   "branch": "feat/gauntlet-r4-quoin-lock",
-  "updatedAtPt": "2026-09-14 10:14 PM PT",
-  "status": "phaseB4-integrity-local-complete-pending-pr"
+  "updatedAtPt": "2026-09-14 10:16 PM PT",
+  "status": "phaseB4-integrity-complete-redeployed",
+  "prUrl": "https://github.com/Btheriot83/buildgames-mixo/pull/8",
+  "deploymentId": "dpl_9efjqEJsQ3kvug9gKxCm35T5G8m6",
+  "liveSmoke": {
+    "url": "https://buildgames-mixo.vercel.app",
+    "http": 200,
+    "at": "2026-09-14 10:16 PM PT",
+    "shot": "gauntlet/shots-r4/r20-prod-smoke.png"
+  }
 }
