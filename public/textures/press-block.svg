@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480">
+  <rect width="640" height="480" fill="#e8e2d6"/>
+  <g opacity="0.9">
+    <rect x="72" y="64" width="496" height="352" fill="#11131a" rx="2"/>
+    <rect x="88" y="80" width="464" height="320" fill="#1c1f2a"/>
+    <rect x="120" y="120" width="280" height="28" fill="#dae278"/>
+    <rect x="120" y="168" width="400" height="12" fill="#f2ede3" opacity="0.85"/>
+    <rect x="120" y="192" width="360" height="12" fill="#f2ede3" opacity="0.65"/>
+    <rect x="120" y="216" width="300" height="12" fill="#f2ede3" opacity="0.45"/>
+    <rect x="120" y="280" width="140" height="44" fill="#9f5762"/>
+    <rect x="280" y="280" width="140" height="44" fill="none" stroke="#dae278" stroke-width="2"/>
+    <circle cx="520" cy="140" r="36" fill="none" stroke="#dae278" stroke-width="3"/>
+    <circle cx="520" cy="140" r="8" fill="#dae278"/>
+  </g>
+  <text x="120" y="420" font-family="Georgia, serif" font-size="18" fill="#591034">FORME · 01 · HOT METAL</text>
+</svg>
