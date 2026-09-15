@@ -31,3 +31,9 @@
 - shot: gauntlet/shots-r4/r2-press-meter-fonts.png
 - verdict: Meter reads as UI copy not all-caps mono shout; Mixo still quieter chrome overall.
 - commit: a0afd4a
+
+## r3 — fonts H1 display scale
+- files: src/app/globals.css
+- shot: gauntlet/shots-r4/r3-h1-scale.png
+- verdict: H1 sits nearer Mixo ~85px weight without leaving Fraunces; Mixo still wins clean sans solidity.
+- commit: 37d44d8

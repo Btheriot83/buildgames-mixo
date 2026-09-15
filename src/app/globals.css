@@ -1205,3 +1205,12 @@ body {
   text-transform: none;
   letter-spacing: 0.01em;
 }
+
+/* r3 — fonts: H1 display scale Mixo-closer under Fraunces */
+.home-shell--r4 .home-title {
+  font-size: clamp(2.5rem, 5.8vw, 4.75rem);
+  line-height: 0.94;
+  letter-spacing: -0.028em;
+  max-width: 12ch;
+  font-variation-settings: "SOFT" 40, "WONK" 0, "opsz" 72;
+}
