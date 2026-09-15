@@ -62,3 +62,9 @@
 - shot: gauntlet/shots-r4/r7-acid-tape-quiet.png
 - verdict: Top strip half as busy (2 labels); Mixo still wins empty whitespace above hero.
 - commit: 74f59ea
+
+## r8 — bar gap job ladder compact
+- files: src/app/globals.css
+- shot: gauntlet/shots-r4/r8-job-ladder-compact.png
+- verdict: Ladder shorter — more air to brief; Mixo has no job chrome (still denser than bar).
+- commit: 23a1aa3

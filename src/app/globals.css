@@ -1266,3 +1266,15 @@ body {
   border-bottom-width: 2px;
 }
 .home-shell--r4 .acid-tape span:nth-child(n+3) { display: none; }
+
+/* r8 — bar gap: job ladder compact */
+.home-shell--r4 .job-ladder {
+  padding: 8px 16px;
+  gap: 8px 12px;
+  border-bottom-width: 2px;
+}
+.home-shell--r4 .job-ladder strong { font-size: 13px; }
+.home-shell--r4 .job-ladder em { font-size: 11px; }
+.home-shell--r4 .job-ladder .job-n {
+  width: 22px; height: 22px; font-size: 11px;
+}
