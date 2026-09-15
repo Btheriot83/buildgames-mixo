@@ -21,7 +21,7 @@ export const THEMES: Record<
     acid: "#dae278",
     rose: "#9f5762",
     wine: "#591034",
-    slate: "#3a3d46",
+    slate: "#2c2f36",
     paper: "#e8e2d6",
   },
   "night-press": {

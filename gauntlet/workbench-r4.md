@@ -37,3 +37,9 @@
 - shot: gauntlet/shots-r4/r3-h1-scale.png
 - verdict: H1 sits nearer Mixo ~85px weight without leaving Fraunces; Mixo still wins clean sans solidity.
 - commit: 37d44d8
+
+## r4 — contrast lede slate
+- files: src/app/globals.css src/lib/themes.ts
+- shot: gauntlet/shots-r4/r4-slate-contrast.png
+- verdict: Lede/muted darker on bone — holds better; Mixo gray still softer on white.
+- commit: a0c075c
