@@ -6,7 +6,7 @@ Personal replacement for the **Mixo** core loop: brief → structured landing pa
 
 ## Stack
 
-- Next.js 15 + TypeScript + Tailwind (layout tokens) + **SQLite** (`better-sqlite3`)
+- Next.js 15 + TypeScript + Tailwind (layout tokens) + **SQLite** (`better-sqlite3` locally, `sql.js` on Vercel)
 - Optional `OPENAI_API_KEY` (degrades to local templates when unset)
 
 ## Setup
@@ -37,7 +37,8 @@ Open http://localhost:3000
 
 ## Architecture
 
-- `src/lib/db.ts` — SQLite projects store
+- `src/lib/db.ts` — SQLite projects store (better-sqlite3 / sql.js)
+- `src/lib/db-sqljs.ts` — pure-JS SQLite adapter for Vercel
 - `src/lib/generate.ts` — brief → sections (local + optional LLM)
 - `src/lib/export.ts` — static HTML + ZIP
 - `src/components/CreateFlow.tsx` — gamified brief steps + press animation
@@ -51,6 +52,18 @@ Open http://localhost:3000
 - Backup: copy that file, or **Export JSON / ZIP** from the editor
 - Import JSON from the home list to restore
 - Sample project is labelled `[SAMPLE]` and deletable
+
+## SQLite on Vercel
+
+**Local:** prefers native `better-sqlite3` (optionalDependency — install continues if native compile fails).
+
+**Vercel / serverless:** falls back to pure-JS [`sql.js`](https://sql.js.org) when `VERCEL=1` is set, or when `better-sqlite3` fails to load. Data is persisted under `/tmp/mixo.sqlite` when writable.
+
+> **Demo caveat:** `/tmp` on Vercel is **ephemeral**. Cold starts may reset projects. Sample data reseeds automatically. Export ZIP/JSON for durable copies.
+
+Force the Vercel path locally: `USE_SQLJS=1 npm run dev`.
+
+`next.config` marks both `better-sqlite3` and `sql.js` as `serverExternalPackages`.
 
 ## Core loop demo
 

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { listProjects, createProject } from "@/lib/db";
+import { listProjects, createProject, initDb } from "@/lib/db";
 import { briefSchema, themeSchema } from "@/lib/validation";
 import { generateFromBrief } from "@/lib/generate";
 import { z } from "zod";
@@ -7,6 +7,7 @@ import { z } from "zod";
 export const runtime = "nodejs";
 
 export async function GET() {
+  await initDb();
   return NextResponse.json({ projects: listProjects() });
 }
 
@@ -18,6 +19,7 @@ const createSchema = z.object({
 
 export async function POST(req: Request) {
   try {
+    await initDb();
     const body = createSchema.parse(await req.json());
     const generated = await generateFromBrief(body.brief);
     const project = createProject({

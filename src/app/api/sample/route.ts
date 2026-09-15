@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
-import { createProject, listProjects } from "@/lib/db";
+import { createProject, listProjects, initDb } from "@/lib/db";
 import { getSampleProject } from "@/lib/sample";
 
 export const runtime = "nodejs";
 
 export async function POST() {
+  await initDb();
   const existing = listProjects().find((p) => p.isSample);
   if (existing) return NextResponse.json({ project: existing });
   const sample = getSampleProject();
