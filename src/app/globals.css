@@ -1369,3 +1369,14 @@ body {
 }
 .home-shell--r4 .billboard-materials { gap: 12px; }
 .home-shell--r4 .home-demo-preview-frame { max-height: 360px; overflow: hidden; }
+
+/* r17 — contrast / dream: demo head as copy block not ink bar */
+.home-shell--r4 .home-demo-preview-head {
+  background: #fffdf8; color: var(--ink); padding: 14px 14px 10px;
+  border-bottom: 2px solid var(--ink);
+}
+.home-shell--r4 .home-demo-preview-head .mono-tag { color: var(--wine); }
+.home-shell--r4 .home-demo-preview-head strong {
+  font-family: var(--font-body); font-size: 1.05rem; font-weight: 700; color: var(--ink);
+}
+.home-shell--r4 .home-demo-preview-head em { color: var(--slate); font-size: 0.92rem; }

@@ -143,3 +143,10 @@
 - vs target: Imagine plate smaller under demo copy
 - verdict: Demo proof leads; plate no longer fights CTA. Mixo has no plate chrome.
 - commit: 53db979
+
+## r17 — contrast demo head (dream)
+- files: src/app/globals.css, src/app/page.tsx
+- shot: gauntlet/shots-r4/r17-demo-head.png
+- vs target: light head with body type instead of ink bar
+- verdict: Right column quieter; Mixo mock window still softer.
+- commit: 7e2418f

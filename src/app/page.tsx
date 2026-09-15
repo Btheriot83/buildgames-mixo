@@ -76,7 +76,7 @@ export default async function HomePage() {
         <aside className="billboard-materials" aria-label="Demo stamped landing">
           <div className="home-demo-preview">
             <div className="home-demo-preview-head">
-              <span className="mono-tag">Demo proof on the bed</span>
+              <span className="mono-tag">Demo landing</span>
               <strong>{demoProof.brief.productName}</strong>
               <em>{demoProof.brief.tagline}</em>
             </div>
