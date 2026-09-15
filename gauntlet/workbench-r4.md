@@ -43,3 +43,10 @@
 - shot: gauntlet/shots-r4/r4-slate-contrast.png
 - verdict: Lede/muted darker on bone — holds better; Mixo gray still softer on white.
 - commit: a0c075c
+
+## r5 — buttons Stamp landing weight
+- files: src/app/globals.css
+- shot: gauntlet/shots-r4/r5-cta-weight.png
+- bar A/B: gauntlet/shots-r4/r5-bar-mixo-ab.png
+- verdict: Primary CTA heavier (16/700/52px) — closer to Mixo Get Started heft; Mixo pink still louder saturation.
+- commit: 0a54be8
