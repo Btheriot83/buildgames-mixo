@@ -1,30 +1,39 @@
 import { NextResponse } from "next/server";
 import { listProjects, createProject, initDb } from "@/lib/db";
 import { briefSchema, themeSchema } from "@/lib/validation";
-import { generateFromBrief } from "@/lib/generate";
+import { briefFromIdea, generateFromBrief, generateFromIdea } from "@/lib/generate";
 import { z } from "zod";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 export async function GET() {
   await initDb();
   return NextResponse.json({ projects: listProjects() });
 }
 
-const createSchema = z.object({
-  brief: briefSchema,
-  title: z.string().trim().min(1).max(120).optional(),
-  theme: themeSchema.optional(),
-});
+const createSchema = z
+  .object({
+    idea: z.string().trim().min(12).max(800).optional(),
+    brief: briefSchema.optional(),
+    title: z.string().trim().min(1).max(120).optional(),
+    theme: themeSchema.optional(),
+  })
+  .refine((v) => Boolean(v.idea || v.brief), {
+    message: "Provide idea or brief",
+  });
 
 export async function POST(req: Request) {
   try {
     await initDb();
     const body = createSchema.parse(await req.json());
-    const generated = await generateFromBrief(body.brief);
+    const generated = body.idea
+      ? await generateFromIdea(body.idea)
+      : await generateFromBrief(body.brief!);
+    const brief = generated.brief || body.brief || briefFromIdea(body.idea || "Untitled");
     const project = createProject({
-      title: body.title || body.brief.productName,
-      brief: body.brief,
+      title: body.title || brief.productName,
+      brief,
       sections: generated.sections,
       theme: body.theme || generated.theme,
     });

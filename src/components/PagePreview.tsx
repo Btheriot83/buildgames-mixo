@@ -22,7 +22,7 @@ function SectionView({ section }: { section: Section }) {
           </div>
           <figure className="pv-figure">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/textures/press-block.svg" alt="" />
+            <img src="/textures/imagine/proof-sheet.png" alt="" />
           </figure>
         </section>
       );
@@ -102,6 +102,7 @@ export function PagePreview({
       }
     >
       <div className="page-preview-inner">
+      <span className="pv-stamp-corner" aria-hidden>Proof</span>
         {project.sections.map((s) => (
           <SectionView key={s.id} section={s} />
         ))}
