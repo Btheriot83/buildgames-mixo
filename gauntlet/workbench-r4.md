@@ -163,3 +163,11 @@
 - shot: gauntlet/shots-r4/r19-flat-reassert.png
 - verdict: Flat paper/ink held; no glass/glow. Mixo still uses soft pastel wash (their brand).
 - commit: b0e9525
+
+## r20 — coherence dream + bar close
+- files: src/app/globals.css, gauntlet/VISIBLE_DELTA_R4.md
+- shot: gauntlet/shots-r4/r20-coherence-after.png
+- bar A/B: gauntlet/shots-r4/r20-bar-mixo-ab.png
+- vs target: live closer on chrome quiet + job-first H1 + sole CTA; target still idealized whitespace
+- verdict: Ship B4 integrity — Mixo still wins pastel conversion fantasy; Quoin Lock holds flat craft.
+- commit: 3b8d699
