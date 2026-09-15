@@ -60,14 +60,8 @@ export default async function HomePage() {
           </div>
 
           <HeroReveal
-            title={
-              <>
-                One brief.
-                <br />
-                A stamped page.
-              </>
-            }
-            lede="Describe the business in one sentence. We stamp an editable landing — hero, features, proof, CTA — then you export static HTML. Print-shop desk for the Mixo job."
+            title={<>Describe the business in one sentence</>}
+            lede="We stamp editable hero, features, proof, and CTA — then you export static HTML."
           />
 
           <section

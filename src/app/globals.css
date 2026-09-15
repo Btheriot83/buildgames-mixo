@@ -1327,3 +1327,18 @@ body {
 .job-crumb strong { color: var(--ink); font-weight: 700; }
 .home-shell--r4 .billboard-stage { padding-top: 28px; }
 .home-shell--r4 .brand-lockup--lg { display: none; } /* brand moved to top bar — dream target */
+
+/* r14 — fonts / dream: job-first H1 scale (target + Mixo clarity) */
+.home-shell--r4 .home-title {
+  font-size: clamp(2.1rem, 4.8vw, 3.6rem);
+  line-height: 1.05;
+  max-width: 16ch;
+  letter-spacing: -0.03em;
+}
+.home-shell--r4 .home-lede {
+  font-size: 1.05rem;
+  max-width: 42ch;
+  margin-bottom: 18px;
+}
+.home-shell--r4 .create-step h2 { display: none; } /* H1 already asks the job */
+.home-shell--r4 .step-kicker { display: none; }

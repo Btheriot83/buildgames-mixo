@@ -120,3 +120,11 @@
 - vs Mixo: still denser than Mixo empty hero chrome, but gap closed
 - verdict: Top chrome finally breathes; Mixo still wins pure whitespace.
 - commit: 8fafb70
+
+## r14 — fonts job-first H1 (dream)
+- files: src/app/page.tsx, src/app/globals.css
+- shot: gauntlet/shots-r4/r14-job-first-h1.png
+- vs target: H1 is the brief ask; create H2 hidden as duplicate
+- vs Mixo: same job-first pattern under Fraunces/Quoin
+- verdict: Job readable in 3s; Mixo still cleaner sans weight.
+- commit: 6cb94d6
