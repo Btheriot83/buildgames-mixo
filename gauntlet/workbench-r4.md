@@ -50,3 +50,9 @@
 - bar A/B: gauntlet/shots-r4/r5-bar-mixo-ab.png
 - verdict: Primary CTA heavier (16/700/52px) — closer to Mixo Get Started heft; Mixo pink still louder saturation.
 - commit: 0a54be8
+
+## r6 — buttons secondary quieter
+- files: src/app/globals.css
+- shot: gauntlet/shots-r4/r6-ghost-quieter.png
+- verdict: Use five lines recedes; Stamp landing dominates — Mixo Log in vs Get Started pattern closer.
+- commit: 6852967

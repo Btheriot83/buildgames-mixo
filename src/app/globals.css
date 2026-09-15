@@ -1238,3 +1238,20 @@ body {
 .home-shell--r4 .create-actions .btn-acid:hover {
   box-shadow: 2px 2px 0 var(--wine);
 }
+
+/* r6 — buttons: secondary quieter vs primary */
+.home-shell--r4 .create-actions .btn-ghost {
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--slate);
+  border: 1.5px solid rgba(17,19,26,0.55);
+  background: transparent;
+  box-shadow: none;
+}
+.home-shell--r4 .create-actions .btn-ghost:hover {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--ink);
+}
