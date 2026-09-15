@@ -61,13 +61,15 @@ export function StampOverlay({
           bottom: "1.5rem",
           left: "50%",
           translate: "-50% 0",
-          padding: "0.6rem 1rem",
-          border: "1px solid var(--rule, #333)",
-          background: "var(--panel, #161616)",
-          color: "var(--acid, #c8f542)",
-          fontFamily: "ui-monospace, monospace",
-          fontSize: "0.75rem",
+          padding: "0.65rem 1.1rem",
+          border: "2px solid var(--ink, #11131a)",
+          background: "var(--acid, #dae278)",
+          color: "var(--ink, #11131a)",
+          fontFamily: "var(--font-body, sans-serif)",
+          fontSize: "14px",
+          fontWeight: 600,
           zIndex: 60,
+          boxShadow: "4px 4px 0 var(--ink, #11131a)",
         }}
       >
         Stamp complete — check downloads

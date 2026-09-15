@@ -1,0 +1,91 @@
+{
+  "slug": "mixo",
+  "app": "Hot Metal Press",
+  "demo": "https://buildgames-mixo.vercel.app",
+  "bar": "https://www.mixo.io/",
+  "repo": "https://github.com/Btheriot83/buildgames-mixo",
+  "phase": "B3",
+  "identityFrozen": "Quoin Lock",
+  "identityPath": "apps/mixo/docs/IDENTITY.md",
+  "doNotReseed": true,
+  "doNotMessageBrandon": true,
+  "brandonHardBar": {
+    "gradients": "stripped \u2014 pixel audit empty",
+    "glassBlur": "killed",
+    "glow": "killed",
+    "materials": "flat paper/ink + paper-grain + Imagine photos"
+  },
+  "phaseA": {
+    "done": true,
+    "techniquesDone": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "aesthetic": "Quoin Lock"
+  },
+  "phaseB": {
+    "roundsCompleted": 5,
+    "roundsTarget": 5,
+    "workbench": "apps/mixo/gauntlet/workbench.md"
+  },
+  "phaseB2": {
+    "roundsCompleted": 10,
+    "roundsTarget": 10,
+    "workbench": "apps/mixo/gauntlet/workbench-r2.md"
+  },
+  "phaseB3": {
+    "roundsCompleted": 20,
+    "roundsTarget": 20,
+    "workbench": "apps/mixo/gauntlet/workbench-r3.md",
+    "focus": [
+      "fonts hierarchy Fraunces display + Plex Sans/Mono UI",
+      "contrast slate darkened; wine meta",
+      "buttons earn weight acid create / ink Stamp HTML",
+      "close A/B vs live Mixo",
+      "flat no-gradient hard bar"
+    ],
+    "rounds": [
+      "R1 display scale",
+      "R2 Bold/SemiBold faces",
+      "R3 body hierarchy",
+      "R4 slate contrast",
+      "R5 primary acid CTA",
+      "R6 secondary quieter",
+      "R7 Stamp HTML ink",
+      "R8 create field Mixo-closer",
+      "R9 meta wine contrast",
+      "R10 chips readable",
+      "R11 job ladder contrast",
+      "R12 preview CTA hierarchy",
+      "R13 form field contrast",
+      "R14 tracking kill",
+      "R15 create H2 + tape",
+      "R16 demo preview head",
+      "R17 editor toolbar",
+      "R18 rail/list type",
+      "R19 flat reassert",
+      "R20 coherence + export craft"
+    ]
+  },
+  "job": "one brief \u2192 stamped landing \u2192 export HTML",
+  "updatedAtPt": "2026-09-14 09:40 PM PT",
+  "branch": "feat/gauntlet-r3-quoin-lock",
+  "status": "phaseB3-complete-redeployed",
+  "prUrl": "https://github.com/Btheriot83/buildgames-mixo/pull/7",
+  "deploymentId": "dpl_F3sov5Cwwg9o2PHUZAyZ5MBrmQ2T",
+  "liveSmoke": {
+    "fontsBoldLoaded": true,
+    "h1ScaleMixoCloser": true,
+    "stampLandingAcidWeight": true,
+    "stampHtmlInkPrimary": true,
+    "antiGradientChrome": true,
+    "liveUrl": "https://buildgames-mixo.vercel.app",
+    "at": "2026-09-14 09:40 PM PT"
+  }
+}

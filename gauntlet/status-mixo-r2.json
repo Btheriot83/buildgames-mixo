@@ -1,0 +1,73 @@
+{
+  "slug": "mixo",
+  "app": "Hot Metal Press",
+  "demo": "https://buildgames-mixo.vercel.app",
+  "bar": "https://www.mixo.io/",
+  "repo": "https://github.com/Btheriot83/buildgames-mixo",
+  "phase": "B2",
+  "identityFrozen": "Quoin Lock",
+  "identityPath": "apps/mixo/docs/IDENTITY.md",
+  "doNotReseed": true,
+  "doNotMessageBrandon": true,
+  "brandonHardBar": {
+    "gradients": "stripped from chrome",
+    "glassBlur": "killed",
+    "glow": "killed",
+    "materials": "flat paper/ink + paper-grain + Imagine photos"
+  },
+  "phaseA": {
+    "done": true,
+    "techniquesDone": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "aesthetic": "Quoin Lock"
+  },
+  "phaseB": {
+    "roundsCompleted": 5,
+    "roundsTarget": 5,
+    "workbench": "apps/mixo/gauntlet/workbench.md"
+  },
+  "phaseB2": {
+    "roundsCompleted": 10,
+    "roundsTarget": 10,
+    "workbench": "apps/mixo/gauntlet/workbench-r2.md",
+    "focus": [
+      "fix visible mistakes",
+      "job clarity brief\u2192stamp\u2192export HTML \u22643s",
+      "real Phoenix diesel / AZ ops briefs",
+      "visibility gate each round",
+      "anti-gradient Inkwell hard bar"
+    ],
+    "rounds": [
+      "R1 job ladder",
+      "R2 Phoenix diesel sample",
+      "R3 craft local generator",
+      "R4 home stamped preview",
+      "R5 example chips",
+      "R6 Stamp HTML primacy",
+      "R7 layout/contrast",
+      "R8 project list density",
+      "R9 hero job copy",
+      "R10 anti-gradient coherence"
+    ]
+  },
+  "job": "one brief \u2192 stamped landing \u2192 export HTML",
+  "updatedAtPt": "2026-09-14 09:23 PM PT",
+  "branch": "feat/gauntlet-r2-quoin-lock",
+  "status": "phaseB2-complete-redeployed",
+  "prUrl": "https://github.com/Btheriot83/buildgames-mixo/pull/6",
+  "deploymentId": "dpl_HbvQNdrZ35TCGvFnqJvwWCFbSnqN",
+  "liveSmoke": {
+    "jobLadder": true,
+    "phoenixDiesel": true,
+    "antiGradientChrome": true,
+    "at": "2026-09-14 09:23 PM PT"
+  }
+}

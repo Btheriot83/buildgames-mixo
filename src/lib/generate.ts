@@ -25,75 +25,167 @@ function pickTheme(brief: Brief): ThemeId {
 export function briefFromIdea(idea: string): Brief {
   const clean = idea.replace(/\s+/g, " ").trim();
   const first = clean.split(/[.!?]/)[0]?.trim() || clean;
+  const lower = clean.toLowerCase();
   const words = first.split(" ").filter(Boolean);
-  const productName =
+  let productName =
     words.slice(0, Math.min(4, Math.max(2, words.length))).join(" ").replace(/[^a-zA-Z0-9 &+-]/g, "").trim() ||
     "Untitled Press";
+
+  let audience = "Local customers who need a clear next step";
+  let tone = "Clear, concrete, shop-floor";
+  if (/diesel|fleet|truck|yard/.test(lower)) {
+    audience = "Fleet managers and owner-operators in the metro";
+    tone = "Straight talk, no fluff";
+    if (/phoenix|mesa|chandler|tempe|glendale|maricopa/.test(lower)) {
+      audience = "Fleet managers and owner-operators in Maricopa County";
+    }
+  } else if (/hvac|ac |air conditioning|furnace/.test(lower)) {
+    audience = "Homeowners booking seasonal service";
+    tone = "Helpful, local, specific";
+  } else if (/cater|lunch|food truck|kitchen/.test(lower)) {
+    audience = "Office managers ordering weekly meals";
+    tone = "Warm, practical, deadline-aware";
+  } else if (/founder|saas|startup|software/.test(lower)) {
+    audience = "Founders shipping one sharp landing page";
+    tone = "Editorial, confident";
+  }
+
+  // Prefer a proper noun-ish name when the idea leads with a place + trade
+  const placeTrade = clean.match(
+    /\b((?:Phoenix|Tucson|Mesa|Tempe|Chandler|Scottsdale|Glendale|Flagstaff)[\w\s-]{0,40}?(?:Diesel|HVAC|Catering|Repair|Plumbing|Roofing|Dental|Clinic))\b/i
+  );
+  if (placeTrade) productName = placeTrade[1].trim().slice(0, 80);
+
   return {
     productName: productName.slice(0, 80),
     tagline: first.slice(0, 160),
-    audience: "Founders and small teams who need a sharp one-page site",
-    tone: "Clear, concrete, editorial",
+    audience,
+    tone,
     offer: clean.slice(0, 240),
   };
+}
+
+function craftFeatures(brief: Brief): { title: string; body: string }[] {
+  const blob = `${brief.tagline} ${brief.offer} ${brief.audience}`.toLowerCase();
+  if (/diesel|fleet|truck|yard/.test(blob)) {
+    return [
+      {
+        title: "On-site bay",
+        body: `We roll to the yard with scan tools and staged parts — built for ${brief.audience}.`,
+      },
+      {
+        title: "Clear estimate first",
+        body: "You see the ticket before the wrench turns. No surprise line items after the job.",
+      },
+      {
+        title: "Metro coverage",
+        body: brief.offer.includes("map")
+          ? "Service map on the page so dispatch knows who we cover before they call."
+          : `Coverage written for ${brief.audience} — weekdays plus contract after-hours.`,
+      },
+    ];
+  }
+  if (/hvac|ac |tune-up|furnace/.test(blob)) {
+    return [
+      {
+        title: "Same-week slots",
+        body: "Tune-ups and diagnostics booked online — no phone tag with the front desk.",
+      },
+      {
+        title: "Service area listed",
+        body: `Neighborhoods named for ${brief.audience}, not a vague 'greater metro' blur.`,
+      },
+      {
+        title: "Financing CTA",
+        body: "Optional financing callout on the hero so the next step is obvious.",
+      },
+    ];
+  }
+  if (/cater|lunch|menu|kitchen/.test(blob)) {
+    return [
+      {
+        title: "Weekly menus",
+        body: "Rotating trays with allergy notes so office managers can order without a call.",
+      },
+      {
+        title: "Hard cutoff",
+        body: "Order deadline on the page (e.g. 9am) so the kitchen can prep without chaos.",
+      },
+      {
+        title: "Office-park ready",
+        body: `Portions and drop times tuned for ${brief.audience}.`,
+      },
+    ];
+  }
+  return [
+    {
+      title: "Starts from your words",
+      body: `The brief is the spine — written for ${brief.audience}, not a blank canvas.`,
+    },
+    {
+      title: "Sections you can rewrite",
+      body: "Change any line on the desk. The preview tracks the proof as you edit.",
+    },
+    {
+      title: "Files you can take",
+      body: "Stamp HTML or ZIP and host it yourself. Nothing held behind an account.",
+    },
+  ];
+}
+
+function craftHeroCtas(brief: Brief): { primary: string; secondary: string } {
+  const blob = `${brief.tagline} ${brief.offer}`.toLowerCase();
+  if (/diesel|bay|fleet|truck/.test(blob)) return { primary: "Book a bay", secondary: "Call the shop" };
+  if (/hvac|tune|ac /.test(blob)) return { primary: "Book a tune-up", secondary: "See service area" };
+  if (/cater|lunch|menu/.test(blob)) return { primary: "Order this week", secondary: "View the menu" };
+  if (/book|appoint|schedul/.test(blob)) return { primary: "Book now", secondary: "Learn more" };
+  return { primary: "Start here", secondary: "See details" };
 }
 
 /** Local craft generator — works without any API key. No FAQ filler by default. */
 export function generateLocal(brief: Brief): GenerateResult {
   const name = brief.productName.trim();
+  const ctas = craftHeroCtas(brief);
   const sections: Section[] = [
     {
       id: randomUUID(),
       type: "hero",
       visible: true,
-      eyebrow: brief.tone.slice(0, 48) || "Proof sheet",
+      eyebrow: brief.tone.slice(0, 48) || "Local landing",
       headline: brief.tagline,
-      subhead: `Made for ${brief.audience}. ${brief.offer}`,
-      primaryCta: "Start here",
-      secondaryCta: "Read the sheet",
+      subhead: `${brief.offer} Built for ${brief.audience}.`,
+      primaryCta: ctas.primary,
+      secondaryCta: ctas.secondary,
     },
     {
       id: randomUUID(),
       type: "features",
       visible: true,
-      heading: `What ${name} locks in`,
-      items: [
-        {
-          title: "Starts from your words",
-          body: `The brief you typed is the spine — written for ${brief.audience}, not a blank canvas.`,
-        },
-        {
-          title: "Sections you can rewrite",
-          body: "Change any line on the desk. The preview tracks the proof as you edit.",
-        },
-        {
-          title: "Files you can take",
-          body: "Stamp HTML or ZIP and host it yourself. Nothing held behind an account.",
-        },
-      ],
+      heading: `What ${name} puts on the page`,
+      items: craftFeatures(brief),
     },
     {
       id: randomUUID(),
       type: "social_proof",
       visible: true,
-      heading: "Shop note",
+      heading: "From the floor",
       quote: brief.offer,
-      attribution: `— drafted for ${brief.audience}`,
+      attribution: `— written for ${brief.audience}`,
     },
     {
       id: randomUUID(),
       type: "cta",
       visible: true,
-      heading: `Put ${name} to work`,
-      body: `Next step for ${brief.audience}: act on the promise above.`,
-      button: "Continue",
+      heading: `Next step with ${name}`,
+      body: `For ${brief.audience}: act on the promise above — no account wall on the export.`,
+      button: ctas.primary,
     },
     {
       id: randomUUID(),
       type: "footer",
       visible: true,
       brand: name,
-      note: `${brief.tagline}`,
+      note: brief.tagline,
     },
   ];
 
@@ -101,7 +193,7 @@ export function generateLocal(brief: Brief): GenerateResult {
     sections,
     theme: pickTheme(brief),
     mode: "local",
-    note: "Generated with local templates (no API key). Set XAI_API_KEY, OPENAI_API_KEY, or ANTHROPIC_AUTH_TOKEN for richer tone.",
+    note: "Generated with local craft templates (no API key). Set XAI_API_KEY, OPENAI_API_KEY, or ANTHROPIC_AUTH_TOKEN for richer tone.",
   };
 }
 
@@ -116,7 +208,7 @@ Return ONLY JSON with this shape:
 Section types allowed: hero, features, social_proof, cta, footer.
 Optional faq only if the brief truly needs it — prefer omitting FAQ.
 Rules:
-- Concrete, specific copy grounded in the brief. No vague SaaS slogans.
+- Concrete, specific copy grounded in the brief (cities, trades, CTAs). No vague SaaS slogans. Prefer Phoenix/ops flavor when the brief names it.
 - No fake stats, no emoji, no "10K+ users", no Trustpilot theater.
 - hero needs: eyebrow, headline, subhead, primaryCta, secondaryCta
 - features needs: heading, items[{title,body}] (2-4 items, asymmetric not identical filler)

@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { initDb, listProjects } from "@/lib/db";
+import { getSampleProject } from "@/lib/sample";
 import { CreateFlow } from "@/components/CreateFlow";
 import { ProjectList } from "@/components/ProjectList";
+import { PagePreview } from "@/components/PagePreview";
 import { HeroReveal } from "@/components/transitions/HeroReveal";
 
 export const dynamic = "force-dynamic";
@@ -9,20 +11,32 @@ export const dynamic = "force-dynamic";
 export default async function HomePage() {
   await initDb();
   const projects = listProjects();
+  const demoProof = projects.find((p) => p.isSample) ?? getSampleProject();
 
   return (
-    <div className="home-shell home-shell--billboard">
-      <div className="acid-tape" aria-hidden>
-        <span>MAKE-READY</span>
-        <span>QUOIN LOCK</span>
-        <span>HOT METAL</span>
-        <span>PROOF DESK</span>
-      </div>
-
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="reg-mark tl" src="/textures/reg-marks.svg" alt="" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="reg-mark br" src="/textures/reg-marks.svg" alt="" />
+    <div className="home-shell home-shell--billboard home-shell--r2 home-shell--r3 home-shell--r4">
+      <header className="top-bar top-bar--dream">
+        <div className="top-bar-brand">
+          <Image
+            src="/textures/imagine/quoin-lock.png"
+            alt=""
+            width={36}
+            height={36}
+            className="brand-mark-img brand-mark-img--sm"
+            priority
+          />
+          <strong>Hot Metal Press</strong>
+        </div>
+        <p className="job-crumb" aria-label="Product job">
+          <span>Job</span>
+          <span aria-hidden>→</span>
+          <strong>Brief</strong>
+          <span aria-hidden>→</span>
+          <span>Stamped landing</span>
+          <span aria-hidden>→</span>
+          <span>Export HTML</span>
+        </p>
+      </header>
 
       <div className="billboard-stage">
         <div className="billboard-copy">
@@ -38,22 +52,16 @@ export default async function HomePage() {
             <div>
               <strong>Hot Metal Press</strong>
               <p className="home-meta">
-                <span>One prompt</span>
-                <span>Stamped sections</span>
+                <span>Brief</span>
+                <span>Stamp landing</span>
                 <span>Export HTML</span>
               </p>
             </div>
           </div>
 
           <HeroReveal
-            title={
-              <>
-                Write the brief.
-                <br />
-                Pull the proof.
-              </>
-            }
-            lede="Type what the page is for. We lock hero, features, proof, and CTA you can edit — then stamp static HTML or a ZIP."
+            title={<>Describe the business in one sentence</>}
+            lede="We stamp editable hero, features, proof, and CTA — then you export static HTML."
           />
 
           <section
@@ -65,8 +73,18 @@ export default async function HomePage() {
           </section>
         </div>
 
-        <aside className="billboard-materials" aria-hidden>
-          <figure className="billboard-proof">
+        <aside className="billboard-materials" aria-label="Demo stamped landing">
+          <div className="home-demo-preview">
+            <div className="home-demo-preview-head">
+              <span className="mono-tag">Demo landing</span>
+              <strong>{demoProof.brief.productName}</strong>
+              <em>{demoProof.brief.tagline}</em>
+            </div>
+            <div className="home-demo-preview-frame">
+              <PagePreview project={demoProof} viewport="tablet" />
+            </div>
+          </div>
+          <figure className="billboard-proof billboard-proof--compact">
             <Image
               src="/textures/imagine/proof-sheet.png"
               alt=""
@@ -77,18 +95,6 @@ export default async function HomePage() {
             />
             <figcaption>Pulled proof · Imagine plate</figcaption>
           </figure>
-          <div className="ink-video ink-video--billboard">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/textures/imagine/quoin-lock.png"
-            >
-              <source src="/textures/ink-loop.mp4" type="video/mp4" />
-            </video>
-            <p className="ink-video-caption">Ink film · make-ready loop</p>
-          </div>
         </aside>
       </div>
 

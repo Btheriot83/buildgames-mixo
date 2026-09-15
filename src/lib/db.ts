@@ -154,24 +154,51 @@ function rowToProject(row: ProjectRow): Project {
 }
 
 function seedIfEmpty(db: AppDatabase) {
+  const sample = getSampleProject();
+  // Drop legacy letterpress sample so R2 Phoenix diesel demo is the one on the bed.
+  db.prepare("DELETE FROM projects WHERE id = ? OR (is_sample = 1 AND id != ?)").run(
+    "sample-letterpress-co",
+    sample.id
+  );
+
+  const existing = db
+    .prepare("SELECT id FROM projects WHERE id = ?")
+    .get(sample.id) as { id: string } | undefined;
+
+  if (existing) {
+    db.prepare(
+      `UPDATE projects SET title = ?, brief_json = ?, sections_json = ?, theme = ?, is_sample = 1, updated_at = ?
+       WHERE id = ?`
+    ).run(
+      sample.title,
+      JSON.stringify(sample.brief),
+      JSON.stringify(sample.sections),
+      sample.theme,
+      sample.updatedAt,
+      sample.id
+    );
+    return;
+  }
+
   const count = db.prepare("SELECT COUNT(*) as c FROM projects").get() as {
     c: number;
   };
-  if (count.c > 0) return;
-  const sample = getSampleProject();
-  db.prepare(
-    `INSERT INTO projects (id, title, brief_json, sections_json, theme, is_sample, created_at, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
-  ).run(
-    sample.id,
-    sample.title,
-    JSON.stringify(sample.brief),
-    JSON.stringify(sample.sections),
-    sample.theme,
-    1,
-    sample.createdAt,
-    sample.updatedAt
-  );
+  // Always ensure the demo sample exists (even if other projects remain).
+  if (count.c === 0 || !existing) {
+    db.prepare(
+      `INSERT INTO projects (id, title, brief_json, sections_json, theme, is_sample, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+    ).run(
+      sample.id,
+      sample.title,
+      JSON.stringify(sample.brief),
+      JSON.stringify(sample.sections),
+      sample.theme,
+      1,
+      sample.createdAt,
+      sample.updatedAt
+    );
+  }
 }
 
 export function listProjects(db?: AppDatabase): Project[] {

@@ -16,7 +16,19 @@
 @font-face {
   font-family: "IBM Plex Sans";
   src: url("/fonts/IBMPlexSans-Medium.ttf") format("truetype");
-  font-weight: 500 600;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-Bold.ttf") format("truetype");
+  font-weight: 700;
   font-display: swap;
 }
 
@@ -29,7 +41,13 @@
 @font-face {
   font-family: "IBM Plex Mono";
   src: url("/fonts/IBMPlexMono-Medium.ttf") format("truetype");
-  font-weight: 500 600;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-SemiBold.ttf") format("truetype");
+  font-weight: 600;
   font-display: swap;
 }
 
@@ -39,7 +57,7 @@
   --acid: #dae278;
   --rose: #9f5762;
   --wine: #591034;
-  --slate: #5c5f68;
+  --slate: #3a3d46;
   --paper: #e8e2d6;
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
   --font-body: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -78,7 +96,7 @@ button { cursor: pointer; }
 .home-shell { position: relative; min-height: 100vh; overflow: hidden; }
 .shader-stage {
   position: absolute; inset: 0 0 auto 0; height: min(58vh, 520px);
-  opacity: 0.9; pointer-events: none; mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  opacity: 0.9; pointer-events: none;
 }
 .ink-video {
   position: absolute; right: -4%; top: 8%; width: min(42vw, 480px);
@@ -251,14 +269,13 @@ button { cursor: pointer; }
 .toggle { display: flex; gap: 8px; align-items: center; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; }
 
 .preview-pane {
-  padding: 24px; background:
-    linear-gradient(90deg, transparent 79px, rgba(17,19,26,0.06) 79px, rgba(17,19,26,0.06) 80px, transparent 80px),
-    var(--paper);
+  padding: 24px; background: var(--paper);
+  border-left: 1px solid rgba(17,19,26,0.12);
   overflow: auto; max-height: calc(100vh - 74px);
 }
 .page-preview {
   margin: 0 auto; background: var(--bone); border: 2px solid var(--ink);
-  box-shadow: 12px 12px 0 rgba(17,19,26,0.15);
+  box-shadow: 12px 12px 0 var(--ink);
   transition: width 0.25s ease;
   background-image: url(/textures/paper-grain.svg);
 }
@@ -308,13 +325,21 @@ button { cursor: pointer; }
 /* Stamp gamification */
 .stamp-overlay {
   position: fixed; inset: 0; z-index: 50;
-  display: grid; place-items: center; background: rgba(17,19,26,0.35);
+  display: grid; place-items: center;
+  background: transparent;
   pointer-events: none;
+}
+.stamp-overlay::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--ink);
+  opacity: 0.72; /* flat ink wash — no blur / no gradient glass */
+  z-index: -1;
 }
 .stamp-mark {
   width: min(320px, 80vw); aspect-ratio: 1; border: 6px double var(--wine);
   border-radius: 50%; display: grid; place-items: center; text-align: center;
-  background: rgba(242,237,227,0.92); color: var(--wine); transform: rotate(-8deg);
+  background: var(--bone); color: var(--wine); transform: rotate(-8deg);
   box-shadow: inset 0 0 0 3px var(--wine);
   font-family: var(--font-mono);
 }
@@ -460,16 +485,14 @@ button { cursor: pointer; }
   font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--wine);
   border: 2px solid var(--wine); padding: 4px 8px; transform: rotate(6deg);
-  background: rgba(242,237,227,0.92); pointer-events: none;
+  background: var(--bone); pointer-events: none;
 }
 .pv-hero h1 { max-width: 14ch; }
 
 
 /* —— VISIBLE DELTA — Quoin Lock billboard (identity amplified, not reseeding) —— */
 .home-shell--billboard {
-  background:
-    linear-gradient(90deg, transparent 47px, rgba(17,19,26,0.07) 47px, rgba(17,19,26,0.07) 48px, transparent 48px),
-    var(--bone);
+  background-color: var(--bone);
   background-image: url(/textures/paper-grain.svg);
   background-blend-mode: multiply;
 }
@@ -558,3 +581,843 @@ button { cursor: pointer; }
 }
 
 .home-shell--billboard .home-title { font-family: var(--font-display); font-size: clamp(3.6rem, 10vw, 7.5rem); line-height: 0.86; letter-spacing: -0.045em; max-width: 9ch; font-weight: 700; }
+
+/* —— Phase B2 R2 — job ladder, chips, demo preview (Quoin Lock locked) —— */
+.job-ladder {
+  list-style: none;
+  margin: 0;
+  padding: 14px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  background: var(--ink);
+  color: var(--bone);
+  border-bottom: 3px solid var(--acid);
+  position: relative;
+  z-index: 5;
+}
+.job-ladder li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 10px;
+  align-items: center;
+}
+.job-ladder .job-n {
+  grid-row: 1 / span 2;
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--acid); color: var(--ink);
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  border: 1.5px solid var(--acid);
+}
+.job-ladder strong {
+  font-family: var(--font-mono);
+  font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.job-ladder em {
+  font-style: normal; font-size: 12px; color: rgba(242, 237, 227, 0.72);
+  grid-column: 2;
+}
+.job-ladder .job-arrow {
+  display: block;
+  font-size: 1.4rem;
+  color: var(--acid);
+  padding: 0 4px;
+}
+
+.example-chips {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  margin-top: 4px;
+}
+.example-chips-label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--rose); margin-right: 4px;
+}
+.chip {
+  border: 1.5px solid var(--ink);
+  background: var(--bone);
+  padding: 6px 10px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.chip:hover, .chip:focus-visible {
+  background: var(--acid);
+}
+
+.home-demo-preview {
+  border: 3px solid var(--ink);
+  box-shadow: 16px 16px 0 var(--wine);
+  background: var(--paper);
+  overflow: hidden;
+}
+.home-demo-preview-head {
+  display: grid; gap: 2px;
+  padding: 12px 14px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--acid);
+}
+.home-demo-preview-head strong {
+  font-family: var(--font-display);
+  font-size: 1.35rem; line-height: 1.1;
+}
+.home-demo-preview-head em {
+  font-style: normal; color: var(--slate); font-size: 0.95rem;
+}
+.home-demo-preview-frame {
+  max-height: 420px;
+  overflow: auto;
+  background: var(--bone);
+}
+.home-demo-preview-frame .page-preview {
+  transform: scale(0.92);
+  transform-origin: top center;
+  pointer-events: none;
+}
+.billboard-proof--compact {
+  max-height: 180px;
+  overflow: hidden;
+}
+.billboard-proof--compact .home-proof-img {
+  min-height: 120px;
+  max-height: 140px;
+  object-fit: cover;
+}
+
+.project-card-offer {
+  font-size: 0.9rem;
+  color: var(--ink);
+  opacity: 0.78;
+  max-width: 52ch;
+}
+.editor-job-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--wine);
+  border: 1.5px solid var(--wine);
+  padding: 6px 10px;
+  background: var(--bone);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.home-shell--r2 .create-panel--billboard::before {
+  content: "BRIEF → STAMP";
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em;
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .job-ladder { justify-content: flex-start; padding: 12px 14px; }
+  .job-ladder .job-arrow { display: none; }
+  .home-demo-preview-frame { max-height: 280px; }
+  .editor-job-pill { display: none; }
+}
+
+
+/* —— Brandon hard bar (Inkwell) — ANTI-GRADIENT R2 —— */
+.home-shell--billboard,
+.home-shell,
+.preview-pane,
+.create-panel,
+.editor-shell,
+.job-ladder {
+  /* no decorative linear/radial/mesh on chrome */
+  background-image: none;
+}
+.home-shell--billboard,
+.home-shell {
+  background-color: var(--bone);
+  background-image: url(/textures/paper-grain.svg);
+  background-blend-mode: multiply;
+}
+.preview-pane { background: var(--paper); background-image: none; }
+.create-panel, .create-panel--billboard { background: var(--paper); background-image: none; }
+.job-ladder { background: var(--ink); background-image: none; }
+.acid-tape { background: var(--acid); background-image: none; }
+/* kill glass / glow */
+* {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.btn-acid, .btn-ink, .chip, .create-panel, .billboard-proof, .home-demo-preview {
+  filter: none;
+}
+
+
+/* ========================================================================
+   Phase B3 — 20 craft rounds (Quoin Lock LOCKED · flat · A/B vs Mixo)
+   Focus: type hierarchy, contrast that holds, buttons that earn weight
+   ======================================================================== */
+
+/* R1 — Display scale closer to Mixo weight without leaving Fraunces */
+.home-shell--billboard .home-title,
+.home-shell--r3 .home-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  max-width: 11ch;
+  font-weight: 700;
+  font-variation-settings: "SOFT" 30, "WONK" 0;
+}
+
+/* R2 — Body type: readable 16px hierarchy (Plex Sans, not Fraunces-as-UI) */
+body {
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.home-lede {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.45;
+  font-weight: 400;
+  color: var(--slate);
+  max-width: 38ch;
+}
+.create-step h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.4vw, 1.85rem);
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  max-width: 22ch;
+}
+.create-step .muted {
+  font-size: 0.98rem;
+  color: var(--slate);
+  max-width: 42ch;
+}
+
+/* R3 — Meta / mono: less AI tracking, still shop */
+.mono-tag,
+.brand-lockup strong,
+.brand-lockup--lg strong,
+.step-kicker,
+.rail-label,
+.example-chips-label,
+.acid-tape,
+.editor-job-pill,
+.ink-video-caption,
+.billboard-proof figcaption {
+  letter-spacing: 0.06em;
+}
+.acid-tape {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  justify-content: flex-start;
+  gap: 18px;
+  padding: 8px 20px;
+}
+.home-meta {
+  letter-spacing: 0.05em;
+  color: var(--wine);
+  font-size: 11px;
+}
+
+/* R4 — Contrast tokens that hold on bone/paper (washed slate fixed in :root) */
+.muted { color: var(--slate); }
+.pv-sub, .pv-rail p, .pv-proof cite { color: var(--slate); }
+.job-ladder em { color: #c9c4b8; } /* was 0.72 bone — now solid mid */
+
+/* R5 — Primary CTA earns weight (Mixo: saturated solid; we: acid + ink + bold) */
+.btn-acid, .btn-ghost, .btn-ink {
+  border: 2px solid var(--ink);
+  padding: 14px 22px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  border-radius: 0;
+  background: transparent;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+.btn-acid {
+  background: var(--acid);
+  color: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-acid:hover {
+  background: var(--ink);
+  color: var(--bone);
+  box-shadow: 2px 2px 0 var(--wine);
+}
+.btn-acid:disabled {
+  opacity: 0.55;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* R6 — Secondary quieter (Mixo Log in vs Get Started) */
+.btn-ghost {
+  background: var(--bone);
+  color: var(--ink);
+  border-color: var(--ink);
+  font-weight: 500;
+  box-shadow: none;
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+.btn-ghost:hover { background: var(--paper); }
+.btn-ghost.danger { color: var(--wine); border-color: var(--wine); }
+
+/* R7 — Highest-weight job button = ink (Stamp HTML) */
+.btn-ink {
+  background: var(--ink);
+  color: var(--bone);
+  border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--wine);
+  font-weight: 700;
+}
+.btn-ink:hover {
+  background: var(--wine);
+  border-color: var(--wine);
+  color: var(--bone);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* R8 — Create panel Mixo-closer: big field + dominant CTA */
+.create-panel--billboard,
+.create-panel {
+  background: var(--paper);
+  background-image: none;
+}
+.create-step textarea {
+  width: 100%;
+  border: 2px solid var(--ink);
+  background: #fffdf8;
+  padding: 16px 16px;
+  resize: vertical;
+  min-height: 112px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.create-step textarea::placeholder {
+  color: #6a6d76;
+  opacity: 1;
+}
+.create-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+.create-actions .btn-acid {
+  min-width: 168px;
+}
+
+/* R9 — Rose/wine meta contrast (not washed on paper) */
+.mono-tag, .step-kicker, .rail-label, .example-chips-label {
+  color: var(--wine);
+  font-weight: 500;
+}
+.pv-eyebrow { color: var(--wine); font-weight: 500; }
+
+/* R10 — Chips: readable, secondary weight */
+.chip {
+  border: 2px solid var(--ink);
+  background: #fffdf8;
+  padding: 8px 12px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+  min-height: 36px;
+}
+.chip:hover, .chip:focus-visible {
+  background: var(--acid);
+  outline: none;
+}
+.example-chips-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* R11 — Job ladder contrast (bone on ink that holds) */
+.job-ladder {
+  background: var(--ink);
+  background-image: none;
+  border-bottom: 3px solid var(--acid);
+  padding: 12px 20px;
+}
+.job-ladder strong {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--bone);
+}
+.job-ladder .job-n {
+  font-weight: 700;
+  border: 2px solid var(--ink);
+}
+.job-ladder em {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: #bdb8ae;
+}
+
+/* R12 — Preview CTAs: ink primary, line secondary, acid for mid CTA */
+.pv-btn-ink, .pv-btn-acid, .pv-btn-line {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  padding: 12px 16px;
+  border: 2px solid var(--ink);
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+}
+.pv-btn-ink { background: var(--ink); color: var(--bone); box-shadow: 3px 3px 0 var(--wine); }
+.pv-btn-acid { background: var(--acid); color: var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+.pv-btn-line { background: transparent; color: var(--ink); }
+
+/* R13 — Form fields high contrast */
+.field input, .field textarea, .field select,
+.adv-brief-grid .field input {
+  border: 2px solid var(--ink);
+  background: #fffdf8;
+  padding: 12px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+}
+.title-input {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.55rem;
+  letter-spacing: -0.02em;
+}
+
+/* R14 — Press meter / shop chrome: readable, not tiny washed mono */
+.press-meter {
+  height: 32px;
+  border: 2px solid var(--ink);
+  background: #fffdf8;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+.press-meter-fill { background: var(--acid); opacity: 1; }
+
+/* R15 — Create panel tape quieter (less noise vs Mixo clean hero) */
+.home-shell--r3 .create-panel--billboard::before,
+.home-shell--r2 .create-panel--billboard::before {
+  content: "BRIEF → STAMP";
+  width: 118px;
+  height: 20px;
+  top: -12px;
+  left: 16px;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* R16 — Demo preview head hierarchy */
+.home-demo-preview-head {
+  background: var(--ink);
+  color: var(--bone);
+  border-bottom: 2px solid var(--ink);
+}
+.home-demo-preview-head .mono-tag { color: var(--acid); }
+.home-demo-preview-head strong {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--bone);
+  line-height: 1.1;
+}
+.home-demo-preview-head em {
+  font-style: normal;
+  color: #c9c4b8;
+  font-size: 0.95rem;
+}
+
+/* R17 — Editor toolbar: Stamp HTML = ink weight; others ghost */
+.editor-top {
+  background: var(--paper);
+  background-image: none;
+  border-bottom: 2px solid var(--ink);
+  align-items: center;
+}
+.editor-top-actions .btn-ghost {
+  min-height: 40px;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+.editor-top-actions .btn-ink,
+.editor-top-actions .btn-acid {
+  min-height: 44px;
+  padding: 10px 18px;
+}
+.vp-toggle {
+  border: 2px solid var(--ink);
+}
+.vp-toggle button {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  padding: 8px 12px;
+}
+.vp-toggle button.active {
+  background: var(--ink);
+  color: var(--bone);
+  font-weight: 600;
+}
+
+/* R18 — Rail / list density contrast */
+.rail-item {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  border-bottom: 1px solid rgba(17,19,26,0.35);
+  padding: 12px 6px;
+}
+.rail-item.active {
+  background: var(--acid);
+  font-weight: 600;
+}
+.list-head h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.project-card strong {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.project-card em { color: var(--slate); }
+
+/* R19 — Flat materials only (reassert Brandon hard bar) */
+.home-shell--r3,
+.home-shell--billboard,
+.preview-pane,
+.create-panel,
+.create-panel--billboard,
+.editor-shell,
+.job-ladder,
+.acid-tape,
+.btn-acid, .btn-ink, .btn-ghost,
+.home-demo-preview,
+.billboard-proof {
+  background-image: none;
+}
+.home-shell--r3,
+.home-shell--billboard,
+.home-shell {
+  background-color: var(--bone);
+  background-image: url(/textures/paper-grain.svg);
+  background-blend-mode: multiply;
+}
+* {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* R20 — Coherence: brand lockup + focus + reduced motion */
+.brand-lockup--lg strong {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+.btn-acid:focus-visible, .btn-ink:focus-visible {
+  outline-color: var(--wine);
+}
+.pressing-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.75rem;
+}
+@media (max-width: 900px) {
+  .home-shell--r3 .home-title,
+  .home-shell--billboard .home-title {
+    font-size: clamp(2.4rem, 11vw, 3.6rem);
+    max-width: 12ch;
+  }
+  .create-actions { flex-wrap: wrap; }
+  .create-actions .btn-acid { width: 100%; }
+}
+
+
+/* ========================================================================
+   Phase B4 INTEGRITY — counted rounds (Quoin Lock LOCKED · flat · vs Mixo)
+   ======================================================================== */
+
+/* r1 — fonts: brand lockup sentence-case Plex (kill uppercase AI shout) */
+.home-shell--r4 .brand-lockup--lg strong,
+.home-shell--r4 .brand-lockup strong {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--ink);
+}
+
+/* r2 — fonts: press meter sentence-case body (less shouty mono) */
+.home-shell--r4 .press-meter {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  height: 34px;
+}
+.home-shell--r4 .press-meter-label {
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+/* r3 — fonts: H1 display scale Mixo-closer under Fraunces */
+.home-shell--r4 .home-title {
+  font-size: clamp(2.5rem, 5.8vw, 4.75rem);
+  line-height: 0.94;
+  letter-spacing: -0.028em;
+  max-width: 12ch;
+  font-variation-settings: "SOFT" 40, "WONK" 0, "opsz" 72;
+}
+
+/* r4 — contrast: secondary copy holds on bone */
+.home-shell--r4 {
+  --slate: #2c2f36;
+}
+.home-shell--r4 .home-lede,
+.home-shell--r4 .muted,
+.home-shell--r4 .create-step .muted {
+  color: var(--slate);
+}
+.home-shell--r4 .home-lede { font-weight: 450; }
+
+/* r5 — buttons: Stamp landing earns Mixo-like primary heft */
+.home-shell--r4 .create-actions .btn-acid {
+  min-width: 200px;
+  min-height: 52px;
+  padding: 16px 28px;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.home-shell--r4 .create-actions .btn-acid:hover {
+  box-shadow: 2px 2px 0 var(--wine);
+}
+
+/* r6 — buttons: secondary quieter vs primary */
+.home-shell--r4 .create-actions .btn-ghost {
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--slate);
+  border: 1.5px solid rgba(17,19,26,0.55);
+  background: transparent;
+  box-shadow: none;
+}
+.home-shell--r4 .create-actions .btn-ghost:hover {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+/* r7 — bar gap: acid tape quieter (Mixo top nav is calm) */
+.home-shell--r4 .acid-tape {
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 6px 18px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  border-bottom-width: 2px;
+}
+.home-shell--r4 .acid-tape span:nth-child(n+3) { display: none; }
+
+/* r8 — bar gap: job ladder compact */
+.home-shell--r4 .job-ladder {
+  padding: 8px 16px;
+  gap: 8px 12px;
+  border-bottom-width: 2px;
+}
+.home-shell--r4 .job-ladder strong { font-size: 13px; }
+.home-shell--r4 .job-ladder em { font-size: 11px; }
+.home-shell--r4 .job-ladder .job-n {
+  width: 22px; height: 22px; font-size: 11px;
+}
+
+/* r9 — contrast: create panel flatter Mixo-like card */
+.home-shell--r4 .create-panel--billboard,
+.home-shell--r4 .create-panel {
+  box-shadow: 8px 8px 0 var(--ink);
+  border-width: 2px;
+  padding: 24px 24px 22px;
+}
+
+/* r10 — fonts: create H2 + kicker Mixo-clear hierarchy */
+.home-shell--r4 .create-step h2 {
+  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+  line-height: 1.15;
+  max-width: 24ch;
+  margin: 2px 0 8px;
+}
+.home-shell--r4 .step-kicker {
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  margin-bottom: 2px;
+}
+.home-shell--r4 .create-step .muted {
+  font-size: 0.95rem;
+  margin: 0 0 12px;
+}
+
+/* r13 — bar gap / dream: quiet top bar (target + Mixo whitespace) */
+.home-shell--r4 .acid-tape,
+.home-shell--r4 .job-ladder,
+.home-shell--r4 .reg-mark { display: none !important; }
+.top-bar--dream {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px 24px; padding: 14px 28px 10px; max-width: 1280px; margin: 0 auto;
+  border-bottom: 2px solid var(--ink); background: var(--bone); background-image: none;
+  position: relative; z-index: 6;
+}
+.top-bar-brand { display: flex; align-items: center; gap: 10px; }
+.top-bar-brand strong {
+  font-family: var(--font-body); font-size: 15px; font-weight: 700;
+  letter-spacing: -0.01em; text-transform: none;
+}
+.brand-mark-img--sm { width: 36px; height: 36px; border: 1.5px solid var(--ink); object-fit: cover; }
+.job-crumb {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin: 0; font-family: var(--font-body); font-size: 12px; color: var(--slate);
+}
+.job-crumb strong { color: var(--ink); font-weight: 700; }
+.home-shell--r4 .billboard-stage { padding-top: 28px; }
+.home-shell--r4 .brand-lockup--lg { display: none; } /* brand moved to top bar — dream target */
+
+/* r14 — fonts / dream: job-first H1 scale (target + Mixo clarity) */
+.home-shell--r4 .home-title {
+  font-size: clamp(2.1rem, 4.8vw, 3.6rem);
+  line-height: 1.05;
+  max-width: 16ch;
+  letter-spacing: -0.03em;
+}
+.home-shell--r4 .home-lede {
+  font-size: 1.05rem;
+  max-width: 42ch;
+  margin-bottom: 18px;
+}
+.home-shell--r4 .create-step h2 { display: none; } /* H1 already asks the job */
+.home-shell--r4 .step-kicker { display: none; }
+
+/* r15 — contrast / dream: stage air + create as focal plane */
+.home-shell--r4 .billboard-stage {
+  gap: 40px; padding: 36px 28px 20px; align-items: start;
+}
+.home-shell--r4 .create-panel--billboard {
+  box-shadow: 6px 6px 0 var(--ink);
+  padding: 22px 22px 20px;
+}
+.home-shell--r4 .billboard-copy { gap: 16px; }
+.home-shell--r4 .home-demo-preview {
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  background: #fffdf8;
+}
+
+/* r16 — bar gap / dream: proof plate secondary to demo */
+.home-shell--r4 .billboard-proof--compact {
+  max-width: 100%;
+  box-shadow: 4px 4px 0 var(--ink);
+  border-width: 2px;
+}
+.home-shell--r4 .billboard-proof--compact .home-proof-img {
+  min-height: 140px; max-height: 180px; object-fit: cover;
+}
+.home-shell--r4 .billboard-materials { gap: 12px; }
+.home-shell--r4 .home-demo-preview-frame { max-height: 360px; overflow: hidden; }
+
+/* r17 — contrast / dream: demo head as copy block not ink bar */
+.home-shell--r4 .home-demo-preview-head {
+  background: #fffdf8; color: var(--ink); padding: 14px 14px 10px;
+  border-bottom: 2px solid var(--ink);
+}
+.home-shell--r4 .home-demo-preview-head .mono-tag { color: var(--wine); }
+.home-shell--r4 .home-demo-preview-head strong {
+  font-family: var(--font-body); font-size: 1.05rem; font-weight: 700; color: var(--ink);
+}
+.home-shell--r4 .home-demo-preview-head em { color: var(--slate); font-size: 0.92rem; }
+
+/* r18 — buttons / dream: chips quieter, CTA sole loud control */
+.home-shell--r4 .chip {
+  border-width: 1.5px; background: #fffdf8; font-size: 12px; min-height: 32px; padding: 6px 10px;
+}
+.home-shell--r4 .example-chips { gap: 8px; margin-top: 10px; }
+.home-shell--r4 .create-actions .btn-acid {
+  min-width: 210px; font-size: 16px; font-weight: 700;
+}
+.home-shell--r4 .press-meter { display: none; } /* target has no meter shout */
+
+/* r19 — contrast flat reassert (Brandon hard bar) */
+.home-shell--r4,
+.home-shell--r4 .top-bar--dream,
+.home-shell--r4 .create-panel,
+.home-shell--r4 .home-demo-preview,
+.home-shell--r4 .btn-acid,
+.home-shell--r4 .btn-ghost {
+  background-image: none;
+}
+.home-shell--r4 {
+  background-color: var(--bone);
+  background-image: url(/textures/paper-grain.svg);
+  background-blend-mode: multiply;
+}
+.home-shell--r4 .home-content--job { padding-top: 28px; }
+.home-shell--r4 .list-head h2 {
+  font-size: 1.25rem; font-family: var(--font-body); font-weight: 700; letter-spacing: -0.01em;
+}
+.home-shell--r4 * { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+
+/* r20 — coherence: focus rings + mobile CTA + dream lock class */
+.home-shell--r4 :focus-visible {
+  outline: 3px solid var(--ink); outline-offset: 3px;
+}
+.home-shell--r4 .btn-acid:focus-visible { outline-color: var(--wine); }
+@media (max-width: 900px) {
+  .home-shell--r4 .home-title { font-size: clamp(1.85rem, 8vw, 2.6rem); max-width: 18ch; }
+  .home-shell--r4 .create-actions .btn-acid { width: 100%; min-width: 0; }
+  .top-bar--dream { padding: 12px 16px; }
+}
