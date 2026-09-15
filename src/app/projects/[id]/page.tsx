@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getProject } from "@/lib/db";
+import { getProject, initDb } from "@/lib/db";
 import { ProjectEditor } from "@/components/ProjectEditor";
 
 export const dynamic = "force-dynamic";
@@ -9,6 +9,7 @@ type Props = { params: Promise<{ id: string }> };
 
 export default async function ProjectPage({ params }: Props) {
   const { id } = await params;
+  await initDb();
   const project = getProject(id);
   if (!project) notFound();
 

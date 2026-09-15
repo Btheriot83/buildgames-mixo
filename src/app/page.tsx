@@ -1,12 +1,13 @@
 import Image from "next/image";
-import { listProjects } from "@/lib/db";
+import { initDb, listProjects } from "@/lib/db";
 import { CreateFlow } from "@/components/CreateFlow";
 import { ProjectList } from "@/components/ProjectList";
 import { InkShader } from "@/components/InkShader";
 
 export const dynamic = "force-dynamic";
 
-export default function HomePage() {
+export default async function HomePage() {
+  await initDb();
   const projects = listProjects();
 
   return (
@@ -50,7 +51,7 @@ export default function HomePage() {
         <ProjectList initial={projects} />
 
         <footer className="site-footer-mini">
-          <span>Data: ./data/mixo.sqlite · export anytime</span>
+          <span>Data: local SQLite · /tmp on Vercel (ephemeral) · export anytime</span>
           <span>Optional OPENAI_API_KEY · works offline without it</span>
         </footer>
       </div>

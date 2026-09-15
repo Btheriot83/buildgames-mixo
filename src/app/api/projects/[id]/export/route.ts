@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getProject } from "@/lib/db";
+import { getProject, initDb } from "@/lib/db";
 import { buildExportZip, renderStaticHtml, projectToImportJson } from "@/lib/export";
 
 export const runtime = "nodejs";
@@ -7,6 +7,7 @@ export const runtime = "nodejs";
 type Ctx = { params: Promise<{ id: string }> };
 
 export async function GET(req: Request, ctx: Ctx) {
+  await initDb();
   const { id } = await ctx.params;
   const project = getProject(id);
   if (!project) return NextResponse.json({ error: "Not found" }, { status: 404 });

@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { createProject } from "@/lib/db";
+import { createProject, initDb } from "@/lib/db";
 import { importSchema } from "@/lib/validation";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   try {
+    await initDb();
     const body = importSchema.parse(await req.json());
     const project = createProject({
       title: body.title,

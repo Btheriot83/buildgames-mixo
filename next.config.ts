@@ -2,7 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1", "localhost"],
-  serverExternalPackages: ["better-sqlite3"],
+  // Native + WASM SQLite backends stay external to the server bundle.
+  serverExternalPackages: ["better-sqlite3", "sql.js"],
   images: {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",

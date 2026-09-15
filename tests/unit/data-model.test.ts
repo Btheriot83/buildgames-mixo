@@ -12,6 +12,8 @@ describe("data model + generate workflow", () => {
     dbPath = path.join(dataDir, "mixo.sqlite");
     vi.resetModules();
     process.env.MIXO_DATA_DIR = dataDir;
+    delete process.env.USE_SQLJS;
+    delete process.env.VERCEL;
   });
 
   afterEach(() => {
@@ -21,6 +23,7 @@ describe("data model + generate workflow", () => {
   it("seeds sample and CRUD projects", async () => {
     const db = await import("../../src/lib/db");
     db.resetDbForTests(dbPath);
+    await db.initDb();
     const list = db.listProjects();
     expect(list.length).toBeGreaterThanOrEqual(1);
     expect(list[0].isSample).toBe(true);
