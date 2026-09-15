@@ -1357,3 +1357,15 @@ body {
   box-shadow: 6px 6px 0 var(--ink);
   background: #fffdf8;
 }
+
+/* r16 — bar gap / dream: proof plate secondary to demo */
+.home-shell--r4 .billboard-proof--compact {
+  max-width: 100%;
+  box-shadow: 4px 4px 0 var(--ink);
+  border-width: 2px;
+}
+.home-shell--r4 .billboard-proof--compact .home-proof-img {
+  min-height: 140px; max-height: 180px; object-fit: cover;
+}
+.home-shell--r4 .billboard-materials { gap: 12px; }
+.home-shell--r4 .home-demo-preview-frame { max-height: 360px; overflow: hidden; }

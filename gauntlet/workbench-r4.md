@@ -136,3 +136,10 @@
 - vs target: more gap between copy and demo; flatter panel
 - verdict: Focal create plane clearer; Mixo still softer card + pink CTA.
 - commit: 1f5f6da
+
+## r16 — bar gap proof secondary (dream)
+- files: src/app/globals.css
+- shot: gauntlet/shots-r4/r16-proof-secondary.png
+- vs target: Imagine plate smaller under demo copy
+- verdict: Demo proof leads; plate no longer fights CTA. Mixo has no plate chrome.
+- commit: 53db979
