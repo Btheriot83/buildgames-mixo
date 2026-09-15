@@ -112,3 +112,11 @@
 - recipes: toast → Save success; error-state-shake → Save fail
 - verdict: Desk save now announces with Quoin toast; Mixo still has no press chrome.
 - commit: 11e3bf6
+
+## r13 — bar gap quiet top (dream)
+- files: src/app/page.tsx, src/app/globals.css
+- shot: gauntlet/shots-r4/r13-quiet-top-dream.png
+- vs target: acid tape + heavy ladder → slim brand + job crumb (closer)
+- vs Mixo: still denser than Mixo empty hero chrome, but gap closed
+- verdict: Top chrome finally breathes; Mixo still wins pure whitespace.
+- commit: 8fafb70

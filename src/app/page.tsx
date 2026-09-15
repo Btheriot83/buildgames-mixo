@@ -15,41 +15,28 @@ export default async function HomePage() {
 
   return (
     <div className="home-shell home-shell--billboard home-shell--r2 home-shell--r3 home-shell--r4">
-      <div className="acid-tape" aria-hidden>
-        <span>MAKE-READY</span>
-        <span>QUOIN LOCK</span>
-        <span>HOT METAL</span>
-        <span>PROOF DESK</span>
-      </div>
-
-      <ol className="job-ladder" aria-label="Product job in three steps">
-        <li>
-          <span className="job-n">1</span>
+      <header className="top-bar top-bar--dream">
+        <div className="top-bar-brand">
+          <Image
+            src="/textures/imagine/quoin-lock.png"
+            alt=""
+            width={36}
+            height={36}
+            className="brand-mark-img brand-mark-img--sm"
+            priority
+          />
+          <strong>Hot Metal Press</strong>
+        </div>
+        <p className="job-crumb" aria-label="Product job">
+          <span>Job</span>
+          <span aria-hidden>→</span>
           <strong>Brief</strong>
-          <em>One sentence</em>
-        </li>
-        <li className="job-arrow" aria-hidden>
-          →
-        </li>
-        <li>
-          <span className="job-n">2</span>
-          <strong>Stamp landing</strong>
-          <em>Editable sections</em>
-        </li>
-        <li className="job-arrow" aria-hidden>
-          →
-        </li>
-        <li>
-          <span className="job-n">3</span>
-          <strong>Export HTML</strong>
-          <em>Static files</em>
-        </li>
-      </ol>
-
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="reg-mark tl" src="/textures/reg-marks.svg" alt="" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="reg-mark br" src="/textures/reg-marks.svg" alt="" />
+          <span aria-hidden>→</span>
+          <span>Stamped landing</span>
+          <span aria-hidden>→</span>
+          <span>Export HTML</span>
+        </p>
+      </header>
 
       <div className="billboard-stage">
         <div className="billboard-copy">

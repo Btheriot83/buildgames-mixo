@@ -1303,3 +1303,27 @@ body {
   font-size: 0.95rem;
   margin: 0 0 12px;
 }
+
+/* r13 — bar gap / dream: quiet top bar (target + Mixo whitespace) */
+.home-shell--r4 .acid-tape,
+.home-shell--r4 .job-ladder,
+.home-shell--r4 .reg-mark { display: none !important; }
+.top-bar--dream {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px 24px; padding: 14px 28px 10px; max-width: 1280px; margin: 0 auto;
+  border-bottom: 2px solid var(--ink); background: var(--bone); background-image: none;
+  position: relative; z-index: 6;
+}
+.top-bar-brand { display: flex; align-items: center; gap: 10px; }
+.top-bar-brand strong {
+  font-family: var(--font-body); font-size: 15px; font-weight: 700;
+  letter-spacing: -0.01em; text-transform: none;
+}
+.brand-mark-img--sm { width: 36px; height: 36px; border: 1.5px solid var(--ink); object-fit: cover; }
+.job-crumb {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin: 0; font-family: var(--font-body); font-size: 12px; color: var(--slate);
+}
+.job-crumb strong { color: var(--ink); font-weight: 700; }
+.home-shell--r4 .billboard-stage { padding-top: 28px; }
+.home-shell--r4 .brand-lockup--lg { display: none; } /* brand moved to top bar — dream target */
