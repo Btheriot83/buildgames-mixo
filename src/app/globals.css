@@ -1286,3 +1286,20 @@ body {
   border-width: 2px;
   padding: 24px 24px 22px;
 }
+
+/* r10 — fonts: create H2 + kicker Mixo-clear hierarchy */
+.home-shell--r4 .create-step h2 {
+  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+  line-height: 1.15;
+  max-width: 24ch;
+  margin: 2px 0 8px;
+}
+.home-shell--r4 .step-kicker {
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  margin-bottom: 2px;
+}
+.home-shell--r4 .create-step .muted {
+  font-size: 0.95rem;
+  margin: 0 0 12px;
+}

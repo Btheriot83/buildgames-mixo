@@ -74,3 +74,10 @@
 - shot: gauntlet/shots-r4/r9-panel-flat-shadow.png
 - verdict: Wine mega-offset gone → ink 8px flat; Mixo card still softer/rounder.
 - commit: 8741b7e
+
+## r10 — fonts create H2 hierarchy
+- files: src/app/globals.css
+- shot: gauntlet/shots-r4/r10-create-h2.png
+- bar A/B: gauntlet/shots-r4/r10-bar-mixo-ab.png
+- verdict: Create title quieter vs field+CTA; Mixo still one H1 only above input.
+- commit: 39ab719
