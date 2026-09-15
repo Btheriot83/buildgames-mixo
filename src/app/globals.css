@@ -1342,3 +1342,18 @@ body {
 }
 .home-shell--r4 .create-step h2 { display: none; } /* H1 already asks the job */
 .home-shell--r4 .step-kicker { display: none; }
+
+/* r15 — contrast / dream: stage air + create as focal plane */
+.home-shell--r4 .billboard-stage {
+  gap: 40px; padding: 36px 28px 20px; align-items: start;
+}
+.home-shell--r4 .create-panel--billboard {
+  box-shadow: 6px 6px 0 var(--ink);
+  padding: 22px 22px 20px;
+}
+.home-shell--r4 .billboard-copy { gap: 16px; }
+.home-shell--r4 .home-demo-preview {
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  background: #fffdf8;
+}

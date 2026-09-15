@@ -128,3 +128,11 @@
 - vs Mixo: same job-first pattern under Fraunces/Quoin
 - verdict: Job readable in 3s; Mixo still cleaner sans weight.
 - commit: 6cb94d6
+
+## r15 — contrast stage air (dream)
+- files: src/app/globals.css
+- shot: gauntlet/shots-r4/r15-stage-air.png
+- bar A/B: gauntlet/shots-r4/r15-bar-mixo-ab.png
+- vs target: more gap between copy and demo; flatter panel
+- verdict: Focal create plane clearer; Mixo still softer card + pink CTA.
+- commit: 1f5f6da
