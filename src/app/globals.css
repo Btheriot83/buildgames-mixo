@@ -1278,3 +1278,11 @@ body {
 .home-shell--r4 .job-ladder .job-n {
   width: 22px; height: 22px; font-size: 11px;
 }
+
+/* r9 — contrast: create panel flatter Mixo-like card */
+.home-shell--r4 .create-panel--billboard,
+.home-shell--r4 .create-panel {
+  box-shadow: 8px 8px 0 var(--ink);
+  border-width: 2px;
+  padding: 24px 24px 22px;
+}

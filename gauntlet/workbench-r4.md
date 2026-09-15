@@ -68,3 +68,9 @@
 - shot: gauntlet/shots-r4/r8-job-ladder-compact.png
 - verdict: Ladder shorter — more air to brief; Mixo has no job chrome (still denser than bar).
 - commit: 23a1aa3
+
+## r9 — contrast create panel flatter
+- files: src/app/globals.css
+- shot: gauntlet/shots-r4/r9-panel-flat-shadow.png
+- verdict: Wine mega-offset gone → ink 8px flat; Mixo card still softer/rounder.
+- commit: 8741b7e
