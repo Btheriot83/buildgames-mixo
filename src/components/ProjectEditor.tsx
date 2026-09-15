@@ -213,7 +213,7 @@ export function ProjectEditor({ initial }: { initial: Project }) {
           </button>
           <button
             type="button"
-            className="btn-acid"
+            className="btn-ink"
             data-testid="stamp-html"
             onClick={() => void exportHtml()}
           >

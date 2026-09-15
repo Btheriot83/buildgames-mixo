@@ -14,7 +14,7 @@ export default async function HomePage() {
   const demoProof = projects.find((p) => p.isSample) ?? getSampleProject();
 
   return (
-    <div className="home-shell home-shell--billboard home-shell--r2">
+    <div className="home-shell home-shell--billboard home-shell--r2 home-shell--r3">
       <div className="acid-tape" aria-hidden>
         <span>MAKE-READY</span>
         <span>QUOIN LOCK</span>
@@ -80,7 +80,7 @@ export default async function HomePage() {
                 A stamped page.
               </>
             }
-            lede="Type what the business does. We lock hero, features, proof, and CTA you can edit — then stamp static HTML or a ZIP. Same job as Mixo, print-shop desk."
+            lede="Describe the business in one sentence. We stamp an editable landing — hero, features, proof, CTA — then you export static HTML. Print-shop desk for the Mixo job."
           />
 
           <section

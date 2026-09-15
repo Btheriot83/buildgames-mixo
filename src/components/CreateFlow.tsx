@@ -73,7 +73,7 @@ export function CreateFlow() {
       <div className="press-meter" aria-hidden>
         <div className="press-meter-fill" style={{ width: pressing ? "100%" : "18%" }} />
         <span className="press-meter-label">
-          {pressing ? "PULLING PROOF" : "ONE PROMPT → STAMP → EXPORT"}
+          {pressing ? "STAMPING LANDING" : "ONE BRIEF → STAMP → EXPORT HTML"}
         </span>
       </div>
 
@@ -87,7 +87,7 @@ export function CreateFlow() {
             exit={{ opacity: 0 }}
           >
             <div className="press-ram" aria-hidden />
-            <p className="pressing-title">Pulling proof…</p>
+            <p className="pressing-title">Stamping landing…</p>
             <p className="muted">
               <ThinkingLine active={pressing} />
             </p>
@@ -200,7 +200,7 @@ export function CreateFlow() {
                 disabled={loading}
                 onClick={() => void submit()}
               >
-                {loading ? "Pulling…" : "Pull proof"}
+                {loading ? "Stamping…" : "Stamp landing"}
               </button>
             </div>
           </motion.div>

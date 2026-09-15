@@ -83,18 +83,18 @@ export function renderStaticHtml(project: Project): string {
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>${esc(project.title)}</title>
 <style>
-:root{${themeCssVars(project.theme)};--font-display:Georgia,"Times New Roman",serif;--font-mono:ui-monospace,Menlo,Consolas,monospace}
-*{box-sizing:border-box}body{margin:0;background:var(--bone);color:var(--ink);font-family:var(--font-display);line-height:1.45}
+:root{${themeCssVars(project.theme)};--font-display:Georgia,"Times New Roman",serif;--font-body:system-ui,-apple-system,"Segoe UI",sans-serif;--font-mono:ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--bone);color:var(--ink);font-family:var(--font-body);line-height:1.55;font-size:16px}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;background-image:url(assets/paper-grain.svg);mix-blend-mode:multiply}
 .wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px;position:relative}
 .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:end;min-height:70vh;border-bottom:2px solid var(--ink);padding-bottom:48px}
-.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);margin:0 0 16px}
-h1{font-size:clamp(2.6rem,6vw,4.6rem);line-height:.95;margin:0 0 20px;letter-spacing:-.02em;max-width:12ch}
-.sub{font-size:1.15rem;max-width:36ch;color:var(--slate)}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--wine);margin:0 0 16px;font-weight:500}
+h1{font-family:var(--font-display);font-size:clamp(2.4rem,5.5vw,4.2rem);line-height:.95;margin:0 0 20px;letter-spacing:-.02em;max-width:14ch;font-weight:700}
+.sub{font-size:1.125rem;max-width:38ch;color:var(--slate)}
 .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.btn-ink,.btn-acid{display:inline-block;padding:14px 22px;background:var(--ink);color:var(--bone);text-decoration:none;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
-.btn-acid{background:var(--acid);color:var(--ink)}
-.btn-line{display:inline-block;padding:14px 22px;border:1.5px solid var(--ink);text-decoration:none;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.btn-ink,.btn-acid{display:inline-block;padding:14px 22px;background:var(--ink);color:var(--bone);text-decoration:none;font-family:var(--font-body);font-size:15px;font-weight:700;letter-spacing:.01em;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--wine)}
+.btn-acid{background:var(--acid);color:var(--ink);font-weight:600;box-shadow:4px 4px 0 var(--ink)}
+.btn-line{display:inline-block;padding:14px 22px;border:2px solid var(--ink);text-decoration:none;font-family:var(--font-body);font-size:14px;font-weight:500;letter-spacing:.01em;color:var(--ink);background:transparent}
 .hero-figure{justify-self:end;border:2px solid var(--ink);box-shadow:12px 12px 0 var(--acid)}
 .hero-figure img{display:block;max-width:100%;height:auto}
 .features{padding:64px 0;display:grid;grid-template-columns:280px 1fr;gap:40px}
