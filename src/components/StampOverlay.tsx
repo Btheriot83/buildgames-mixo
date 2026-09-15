@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 
 /** Gamified "press stamp" delight on successful export / publish. */
 export function StampOverlay({
@@ -10,31 +10,68 @@ export function StampOverlay({
   show: boolean;
   label?: string;
 }) {
+  const [checkIn, setCheckIn] = useState(false);
+  const [toastOpen, setToastOpen] = useState(false);
+
+  useEffect(() => {
+    if (!show) {
+      setCheckIn(false);
+      setToastOpen(false);
+      return;
+    }
+    setCheckIn(false);
+    setToastOpen(false);
+    const id = requestAnimationFrame(() => {
+      setCheckIn(true);
+      setToastOpen(true);
+    });
+    return () => cancelAnimationFrame(id);
+  }, [show]);
+
+  if (!show) return null;
+
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          className="stamp-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          role="status"
-          aria-live="polite"
+    <div className="stamp-overlay" role="status" aria-live="polite">
+      <div className="stamp-mark" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}>
+        <span
+          className="t-success-check"
+          data-state={checkIn ? "in" : "out"}
+          aria-hidden="true"
+          style={{ color: "var(--acid, #c8f542)" }}
         >
-          <motion.div
-            className="stamp-mark"
-            initial={{ scale: 2.4, rotate: -18, opacity: 0 }}
-            animate={{ scale: 1, rotate: -8, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 260, damping: 18 }}
-          >
-            <span className="stamp-ring" />
-            <strong>{label}</strong>
-            <em>HOT METAL · EXPORT OK</em>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          <svg width="64" height="64" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="22" stroke="currentColor" strokeWidth="2" opacity="0.35" />
+            <path
+              d="M14 25.5 L21 32.5 L34 16.5"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+          </svg>
+        </span>
+        <strong>{label}</strong>
+        <em>HOT METAL · EXPORT OK</em>
+      </div>
+      <div
+        className={`t-toast ${toastOpen ? "is-open" : ""}`}
+        style={{
+          position: "fixed",
+          bottom: "1.5rem",
+          left: "50%",
+          translate: "-50% 0",
+          padding: "0.6rem 1rem",
+          border: "1px solid var(--rule, #333)",
+          background: "var(--panel, #161616)",
+          color: "var(--acid, #c8f542)",
+          fontFamily: "ui-monospace, monospace",
+          fontSize: "0.75rem",
+          zIndex: 60,
+        }}
+      >
+        Stamp complete — check downloads
+      </div>
+    </div>
   );
 }

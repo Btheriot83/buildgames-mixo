@@ -3,6 +3,7 @@ import { initDb, listProjects } from "@/lib/db";
 import { CreateFlow } from "@/components/CreateFlow";
 import { ProjectList } from "@/components/ProjectList";
 import { InkShader } from "@/components/InkShader";
+import { HeroReveal } from "@/components/transitions/HeroReveal";
 
 export const dynamic = "force-dynamic";
 
@@ -37,14 +38,13 @@ export default async function HomePage() {
             <span>Local SQLite</span>
             <span>Static export</span>
           </p>
-          <h1 className="home-title">Pull a proof, not a template</h1>
-          <p className="home-lede">
-            Short brief in. Structured sections out. Edit on the desk, preview live,
-            stamp HTML or ZIP. Single-user, private, no accounts.
-          </p>
+          <HeroReveal
+            title="Pull a proof, not a template"
+            lede="Short brief in. Structured sections out. Edit on the desk, preview live, stamp HTML or ZIP. Single-user, private, no accounts."
+          />
         </header>
 
-        <section className="create-panel" aria-label="Create from brief">
+        <section className="create-panel t-panel-slide" data-open="true" aria-label="Create from brief">
           <CreateFlow />
         </section>
 

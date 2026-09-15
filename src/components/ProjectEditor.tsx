@@ -6,6 +6,7 @@ import { SectionEditor } from "./SectionEditor";
 import { PagePreview } from "./PagePreview";
 import { StampOverlay } from "./StampOverlay";
 import { THEMES } from "@/lib/themes";
+import { SpinningCounter } from "./transitions/SpinningCounter";
 
 export function ProjectEditor({ initial }: { initial: Project }) {
   const [project, setProject] = useState(initial);
@@ -184,7 +185,7 @@ export function ProjectEditor({ initial }: { initial: Project }) {
               className={`rail-item ${s.id === active?.id ? "active" : ""} ${s.visible ? "" : "dim"}`}
               onClick={() => setActiveId(s.id)}
             >
-              <span className="rail-index">{String(i + 1).padStart(2, "0")}</span>
+              <span className="rail-index"><SpinningCounter value={i + 1} pad={2} /></span>
               {s.type.replace("_", " ")}
             </button>
           ))}

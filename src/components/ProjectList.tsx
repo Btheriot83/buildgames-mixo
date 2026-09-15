@@ -2,13 +2,21 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Project } from "@/lib/types";
 
 export function ProjectList({ initial }: { initial: Project[] }) {
   const [projects, setProjects] = useState(initial);
   const [error, setError] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setProjects(initial);
+    setOpen(false);
+    const id = requestAnimationFrame(() => setOpen(true));
+    return () => cancelAnimationFrame(id);
+  }, [initial]);
 
   async function remove(id: string) {
     setError(null);
@@ -40,7 +48,7 @@ export function ProjectList({ initial }: { initial: Project[] }) {
 
   if (projects.length === 0) {
     return (
-      <div className="empty-state">
+      <div className="empty-state t-panel-slide" data-open={open ? "true" : "false"}>
         <h2>No formes on the bed</h2>
         <p>Start a brief above, or import a previously exported JSON proof.</p>
         <label className="btn-ghost file-btn">
@@ -61,7 +69,7 @@ export function ProjectList({ initial }: { initial: Project[] }) {
   }
 
   return (
-    <div className="project-list">
+    <div className="project-list t-panel-slide" data-open={open ? "true" : "false"}>
       <div className="list-head">
         <h2>On the bed</h2>
         <label className="btn-ghost file-btn">
