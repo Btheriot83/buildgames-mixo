@@ -74,17 +74,18 @@
     ]
   },
   "job": "one brief \u2192 stamped landing \u2192 export HTML",
-  "updatedAtPt": "2026-09-14 09:38 PM PT",
+  "updatedAtPt": "2026-09-14 09:40 PM PT",
   "branch": "feat/gauntlet-r3-quoin-lock",
-  "status": "phaseB3-complete-pending-redeploy",
-  "prUrl": null,
-  "deploymentId": null,
+  "status": "phaseB3-complete-redeployed",
+  "prUrl": "https://github.com/Btheriot83/buildgames-mixo/pull/7",
+  "deploymentId": "dpl_F3sov5Cwwg9o2PHUZAyZ5MBrmQ2T",
   "liveSmoke": {
     "fontsBoldLoaded": true,
     "h1ScaleMixoCloser": true,
     "stampLandingAcidWeight": true,
     "stampHtmlInkPrimary": true,
     "antiGradientChrome": true,
-    "at": "2026-09-14 09:38 PM PT"
+    "liveUrl": "https://buildgames-mixo.vercel.app",
+    "at": "2026-09-14 09:40 PM PT"
   }
 }
