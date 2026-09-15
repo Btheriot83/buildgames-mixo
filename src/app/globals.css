@@ -108,8 +108,9 @@ button { cursor: pointer; }
 }
 .home-title {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: 0.92; letter-spacing: -0.03em;
-  margin: 0 0 18px; max-width: 11ch;
+  font-size: clamp(3.4rem, 9vw, 7.2rem); line-height: 0.88; letter-spacing: -0.04em;
+  margin: 0 0 18px; max-width: 10ch;
+  font-weight: 700;
 }
 .home-lede { font-size: 1.15rem; color: var(--slate); max-width: 34ch; margin: 0 0 28px; }
 .home-meta {
@@ -462,3 +463,98 @@ button { cursor: pointer; }
   background: rgba(242,237,227,0.92); pointer-events: none;
 }
 .pv-hero h1 { max-width: 14ch; }
+
+
+/* —— VISIBLE DELTA — Quoin Lock billboard (identity amplified, not reseeding) —— */
+.home-shell--billboard {
+  background:
+    linear-gradient(90deg, transparent 47px, rgba(17,19,26,0.07) 47px, rgba(17,19,26,0.07) 48px, transparent 48px),
+    var(--bone);
+  background-image: url(/textures/paper-grain.svg);
+  background-blend-mode: multiply;
+}
+.acid-tape {
+  display: flex; gap: 28px; align-items: center; justify-content: center; flex-wrap: wrap;
+  background: var(--acid); color: var(--ink);
+  border-bottom: 3px solid var(--ink);
+  padding: 10px 16px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  position: relative; z-index: 5;
+}
+.acid-tape span:nth-child(even) { color: var(--wine); }
+.reg-mark { width: 96px; height: 96px; opacity: 1; }
+.reg-mark.tl { top: 52px; left: 12px; }
+.reg-mark.br { bottom: 12px; right: 12px; }
+
+.billboard-stage {
+  display: grid;
+  grid-template-columns: minmax(320px, 1.05fr) minmax(280px, 0.95fr);
+  gap: 28px;
+  align-items: start;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 36px 28px 24px;
+  position: relative; z-index: 3;
+}
+.billboard-copy { display: grid; gap: 22px; }
+.brand-lockup--lg { gap: 16px; margin-bottom: 8px; }
+.brand-mark-img--lg { width: 72px; height: 72px; box-shadow: 4px 4px 0 var(--wine); }
+.brand-lockup--lg strong {
+  font-size: 14px; letter-spacing: 0.16em;
+}
+
+.create-panel--billboard {
+  max-width: none;
+  box-shadow: 14px 14px 0 var(--wine);
+  border-width: 3px;
+  background: var(--paper);
+}
+.create-panel--billboard::before {
+  content: ""; position: absolute; top: -14px; left: 18px; width: 120px; height: 22px;
+  background: var(--acid); border: 2px solid var(--ink); transform: rotate(-2deg);
+}
+
+.billboard-materials {
+  display: grid; gap: 16px;
+  position: sticky; top: 24px;
+}
+.billboard-proof {
+  margin: 0;
+  border: 3px solid var(--ink);
+  box-shadow: 16px 16px 0 var(--wine);
+  background: var(--paper);
+  position: relative;
+}
+.billboard-proof .home-proof-img {
+  display: block; width: 100%; height: auto;
+  filter: contrast(1.08) saturate(0.95);
+  min-height: 280px; object-fit: cover;
+}
+.billboard-proof figcaption {
+  margin: 0; padding: 8px 12px; border-top: 2px solid var(--ink);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--acid); color: var(--ink);
+}
+.ink-video--billboard {
+  position: relative; width: 100%;
+  border: 3px solid var(--ink);
+  box-shadow: 12px 12px 0 var(--acid);
+  animation: none;
+}
+.ink-video--billboard video { min-height: 160px; object-fit: cover; width: 100%; }
+
+.home-content--job {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 28px 96px;
+}
+.home-lede { font-size: 1.2rem; max-width: 36ch; }
+
+@media (max-width: 900px) {
+  .billboard-stage { grid-template-columns: 1fr; }
+  .billboard-materials { position: relative; top: auto; }
+  .home-title { font-size: clamp(3rem, 14vw, 4.8rem); max-width: 12ch; }
+  .reg-mark { width: 64px; height: 64px; }
+}
+
+.home-shell--billboard .home-title { font-family: var(--font-display); font-size: clamp(3.6rem, 10vw, 7.5rem); line-height: 0.86; letter-spacing: -0.045em; max-width: 9ch; font-weight: 700; }
