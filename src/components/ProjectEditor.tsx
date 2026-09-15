@@ -84,17 +84,24 @@ export function ProjectEditor({ initial }: { initial: Project }) {
   }
 
   async function exportHtml() {
-    const res = await fetch(`/api/projects/${project.id}/export?format=html`);
-    if (!res.ok) return;
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${project.title.replace(/[^\w.-]+/g, "-")}.html`;
-    a.click();
-    URL.revokeObjectURL(url);
-    setStamp(true);
-    setTimeout(() => setStamp(false), 1800);
+    setMessage(null);
+    try {
+      const res = await fetch(`/api/projects/${project.id}/export?format=html`);
+      if (!res.ok) throw new Error("Export failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${project.title.replace(/[^\w.-]+/g, "-")}.html`;
+      a.click();
+      URL.revokeObjectURL(url);
+      setStamp(true);
+      setTimeout(() => setStamp(false), 1800);
+      setMessage("HTML stamped — check downloads");
+    } catch (e) {
+      setStatus("error");
+      setMessage(e instanceof Error ? e.message : "Export failed");
+    }
   }
 
   async function exportJson() {
@@ -143,7 +150,7 @@ export function ProjectEditor({ initial }: { initial: Project }) {
       <StampOverlay show={stamp} />
       <header className="editor-top">
         <div>
-          <p className="mono-tag">Proof desk</p>
+          <p className="mono-tag">Proof desk · brief stamped · export ready</p>
           <input
             className="title-input"
             aria-label="Project title"
@@ -152,6 +159,9 @@ export function ProjectEditor({ initial }: { initial: Project }) {
           />
         </div>
         <div className="editor-top-actions">
+          <p className="editor-job-pill" aria-hidden>
+            Edit sections · Stamp HTML
+          </p>
           <label className="field compact">
             <span>Theme</span>
             <select
@@ -187,12 +197,6 @@ export function ProjectEditor({ initial }: { initial: Project }) {
           >
             {saving ? "Locking…" : "Save"}
           </button>
-          <button type="button" className="btn-ghost" onClick={() => void exportHtml()}>
-            HTML
-          </button>
-          <button type="button" className="btn-ghost" onClick={() => void exportJson()}>
-            JSON
-          </button>
           <button
             type="button"
             className="btn-ghost"
@@ -201,8 +205,19 @@ export function ProjectEditor({ initial }: { initial: Project }) {
           >
             {restamping ? "Restamping…" : "Restamp AI"}
           </button>
-          <button type="button" className="btn-acid" onClick={() => void exportZip()}>
-            Stamp ZIP
+          <button type="button" className="btn-ghost" onClick={() => void exportJson()}>
+            JSON
+          </button>
+          <button type="button" className="btn-ghost" onClick={() => void exportZip()}>
+            ZIP
+          </button>
+          <button
+            type="button"
+            className="btn-acid"
+            data-testid="stamp-html"
+            onClick={() => void exportHtml()}
+          >
+            Stamp HTML
           </button>
         </div>
       </header>

@@ -78,7 +78,7 @@ button { cursor: pointer; }
 .home-shell { position: relative; min-height: 100vh; overflow: hidden; }
 .shader-stage {
   position: absolute; inset: 0 0 auto 0; height: min(58vh, 520px);
-  opacity: 0.9; pointer-events: none; mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  opacity: 0.9; pointer-events: none;
 }
 .ink-video {
   position: absolute; right: -4%; top: 8%; width: min(42vw, 480px);
@@ -251,14 +251,13 @@ button { cursor: pointer; }
 .toggle { display: flex; gap: 8px; align-items: center; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; }
 
 .preview-pane {
-  padding: 24px; background:
-    linear-gradient(90deg, transparent 79px, rgba(17,19,26,0.06) 79px, rgba(17,19,26,0.06) 80px, transparent 80px),
-    var(--paper);
+  padding: 24px; background: var(--paper);
+  border-left: 1px solid rgba(17,19,26,0.12);
   overflow: auto; max-height: calc(100vh - 74px);
 }
 .page-preview {
   margin: 0 auto; background: var(--bone); border: 2px solid var(--ink);
-  box-shadow: 12px 12px 0 rgba(17,19,26,0.15);
+  box-shadow: 12px 12px 0 var(--ink);
   transition: width 0.25s ease;
   background-image: url(/textures/paper-grain.svg);
 }
@@ -308,13 +307,21 @@ button { cursor: pointer; }
 /* Stamp gamification */
 .stamp-overlay {
   position: fixed; inset: 0; z-index: 50;
-  display: grid; place-items: center; background: rgba(17,19,26,0.35);
+  display: grid; place-items: center;
+  background: transparent;
   pointer-events: none;
+}
+.stamp-overlay::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--ink);
+  opacity: 0.72; /* flat ink wash — no blur / no gradient glass */
+  z-index: -1;
 }
 .stamp-mark {
   width: min(320px, 80vw); aspect-ratio: 1; border: 6px double var(--wine);
   border-radius: 50%; display: grid; place-items: center; text-align: center;
-  background: rgba(242,237,227,0.92); color: var(--wine); transform: rotate(-8deg);
+  background: var(--bone); color: var(--wine); transform: rotate(-8deg);
   box-shadow: inset 0 0 0 3px var(--wine);
   font-family: var(--font-mono);
 }
@@ -460,16 +467,14 @@ button { cursor: pointer; }
   font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--wine);
   border: 2px solid var(--wine); padding: 4px 8px; transform: rotate(6deg);
-  background: rgba(242,237,227,0.92); pointer-events: none;
+  background: var(--bone); pointer-events: none;
 }
 .pv-hero h1 { max-width: 14ch; }
 
 
 /* —— VISIBLE DELTA — Quoin Lock billboard (identity amplified, not reseeding) —— */
 .home-shell--billboard {
-  background:
-    linear-gradient(90deg, transparent 47px, rgba(17,19,26,0.07) 47px, rgba(17,19,26,0.07) 48px, transparent 48px),
-    var(--bone);
+  background-color: var(--bone);
   background-image: url(/textures/paper-grain.svg);
   background-blend-mode: multiply;
 }
@@ -558,3 +563,170 @@ button { cursor: pointer; }
 }
 
 .home-shell--billboard .home-title { font-family: var(--font-display); font-size: clamp(3.6rem, 10vw, 7.5rem); line-height: 0.86; letter-spacing: -0.045em; max-width: 9ch; font-weight: 700; }
+
+/* —— Phase B2 R2 — job ladder, chips, demo preview (Quoin Lock locked) —— */
+.job-ladder {
+  list-style: none;
+  margin: 0;
+  padding: 14px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  background: var(--ink);
+  color: var(--bone);
+  border-bottom: 3px solid var(--acid);
+  position: relative;
+  z-index: 5;
+}
+.job-ladder li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 10px;
+  align-items: center;
+}
+.job-ladder .job-n {
+  grid-row: 1 / span 2;
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--acid); color: var(--ink);
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  border: 1.5px solid var(--acid);
+}
+.job-ladder strong {
+  font-family: var(--font-mono);
+  font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.job-ladder em {
+  font-style: normal; font-size: 12px; color: rgba(242, 237, 227, 0.72);
+  grid-column: 2;
+}
+.job-ladder .job-arrow {
+  display: block;
+  font-size: 1.4rem;
+  color: var(--acid);
+  padding: 0 4px;
+}
+
+.example-chips {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  margin-top: 4px;
+}
+.example-chips-label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--rose); margin-right: 4px;
+}
+.chip {
+  border: 1.5px solid var(--ink);
+  background: var(--bone);
+  padding: 6px 10px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.chip:hover, .chip:focus-visible {
+  background: var(--acid);
+}
+
+.home-demo-preview {
+  border: 3px solid var(--ink);
+  box-shadow: 16px 16px 0 var(--wine);
+  background: var(--paper);
+  overflow: hidden;
+}
+.home-demo-preview-head {
+  display: grid; gap: 2px;
+  padding: 12px 14px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--acid);
+}
+.home-demo-preview-head strong {
+  font-family: var(--font-display);
+  font-size: 1.35rem; line-height: 1.1;
+}
+.home-demo-preview-head em {
+  font-style: normal; color: var(--slate); font-size: 0.95rem;
+}
+.home-demo-preview-frame {
+  max-height: 420px;
+  overflow: auto;
+  background: var(--bone);
+}
+.home-demo-preview-frame .page-preview {
+  transform: scale(0.92);
+  transform-origin: top center;
+  pointer-events: none;
+}
+.billboard-proof--compact {
+  max-height: 180px;
+  overflow: hidden;
+}
+.billboard-proof--compact .home-proof-img {
+  min-height: 120px;
+  max-height: 140px;
+  object-fit: cover;
+}
+
+.project-card-offer {
+  font-size: 0.9rem;
+  color: var(--ink);
+  opacity: 0.78;
+  max-width: 52ch;
+}
+.editor-job-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--wine);
+  border: 1.5px solid var(--wine);
+  padding: 6px 10px;
+  background: var(--bone);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.home-shell--r2 .create-panel--billboard::before {
+  content: "BRIEF → STAMP";
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em;
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .job-ladder { justify-content: flex-start; padding: 12px 14px; }
+  .job-ladder .job-arrow { display: none; }
+  .home-demo-preview-frame { max-height: 280px; }
+  .editor-job-pill { display: none; }
+}
+
+
+/* —— Brandon hard bar (Inkwell) — ANTI-GRADIENT R2 —— */
+.home-shell--billboard,
+.home-shell,
+.preview-pane,
+.create-panel,
+.editor-shell,
+.job-ladder {
+  /* no decorative linear/radial/mesh on chrome */
+  background-image: none;
+}
+.home-shell--billboard,
+.home-shell {
+  background-color: var(--bone);
+  background-image: url(/textures/paper-grain.svg);
+  background-blend-mode: multiply;
+}
+.preview-pane { background: var(--paper); background-image: none; }
+.create-panel, .create-panel--billboard { background: var(--paper); background-image: none; }
+.job-ladder { background: var(--ink); background-image: none; }
+.acid-tape { background: var(--acid); background-image: none; }
+/* kill glass / glow */
+* {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.btn-acid, .btn-ink, .chip, .create-panel, .billboard-proof, .home-demo-preview {
+  filter: none;
+}

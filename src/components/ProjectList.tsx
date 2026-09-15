@@ -54,7 +54,10 @@ export function ProjectList({ initial }: { initial: Project[] }) {
           <img src="/textures/imagine/empty-type.png" alt="" />
         </div>
         <h2>Nothing on the bed yet</h2>
-        <p>Describe an idea above to stamp your first landing — or import a JSON proof.</p>
+        <p>
+          Paste a real brief above (Phoenix diesel, Tucson HVAC…) to stamp your first
+          landing — or import a JSON proof.
+        </p>
         <label className="btn-ghost file-btn">
           Import JSON
           <input
@@ -94,9 +97,14 @@ export function ProjectList({ initial }: { initial: Project[] }) {
         {projects.map((p) => (
           <li key={p.id}>
             <Link href={`/projects/${p.id}`} className="project-card">
-              <span className="mono-tag">{p.isSample ? "SAMPLE" : p.theme}</span>
-              <strong>{p.title}</strong>
+              <span className="mono-tag">
+                {p.isSample ? "DEMO · DELETE OK" : p.theme}
+                {" · "}
+                {p.sections.filter((s) => s.visible).length} sections
+              </span>
+              <strong>{p.brief.productName || p.title}</strong>
               <em>{p.brief.tagline}</em>
+              <span className="project-card-offer">{p.brief.offer}</span>
             </Link>
             <button type="button" className="btn-ghost danger" onClick={() => void remove(p.id)}>
               Delete

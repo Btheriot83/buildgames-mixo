@@ -1,7 +1,7 @@
 /* transitions.dev recipes — free set, wired into product UX */
 :root {
   --check-blur-dur: 500ms;
-  --check-blur-from: 10px;
+  --check-blur-from:  0px;
   --check-bob-dur: 500ms;
   --check-ease-bob: cubic-bezier(0.34, 1.35, 0.64, 1);
   --check-ease-opacity: cubic-bezier(0.22, 1, 0.36, 1);
@@ -14,7 +14,7 @@
   --check-rotate-dur: 500ms;
   --check-rotate-from: 80deg;
   --check-y-amount: 40px;
-  --panel-blur: 2px;
+  --panel-blur:  0px;
   --panel-close-dur: 350ms;
   --panel-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --panel-open-dur: 400ms;
@@ -22,15 +22,15 @@
   --reel-cell: 30px;
   --reel-dur: 1400ms;
   --reel-ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --reel-spin-blur: 3px;
+  --reel-spin-blur:  0px;
   --reel-stagger: 90ms;
-  --stagger-blur: 3px;
+  --stagger-blur:  0px;
   --stagger-distance: 12px;
   --stagger-dur: 500ms;
   --stagger-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --stagger-stagger: 40ms;
   --think-base: #7c7c7c;
-  --think-blur: 2px;
+  --think-blur:  0px;
   --think-distance: 8px;
   --think-ease: ease-in-out;
   --think-gap: 50ms;
@@ -38,7 +38,7 @@
   --think-hold: 2000ms;
   --think-shimmer: 2000ms;
   --think-swap: 150ms;
-  --toast-blur: 2px;
+  --toast-blur:  0px;
   --toast-close: 250ms;
   --toast-distance: 16px;
   --toast-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -50,7 +50,7 @@
 .t-panel-slide {
   transform: translateY(var(--panel-translate-y));
   opacity: 0;
-  filter: blur(var(--panel-blur));
+  filter: none;
   pointer-events: none;
   transition:
     transform var(--panel-close-dur) var(--panel-ease),
@@ -77,9 +77,7 @@
 .t-reel { display: inline-flex; align-items: center; height: var(--reel-cell); font-variant-numeric: tabular-nums; }
 .t-reel-col {
   position: relative; height: var(--reel-cell); overflow: hidden;
-  /* Soft-fade the window edges instead of hard-cropping. */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  /* Hard crop — no soft gradient mask (Brandon anti-slop). */
 }
 .t-reel-strip { display: flex; flex-direction: column; will-change: transform, filter; }
 .t-reel-digit { height: var(--reel-cell); display: flex; align-items: center; justify-content: center; }
@@ -129,7 +127,7 @@
   to   { transform: rotate(0deg); }
 }
 @keyframes t-check-blur {
-  from { filter: blur(var(--check-blur-from)); }
+  from { filter: none; }
   to   { filter: blur(0); }
 }
 @keyframes t-check-bob {
@@ -152,7 +150,7 @@
   display: block;
   opacity: 0;
   transform: translateY(var(--stagger-distance));
-  filter: blur(var(--stagger-blur));
+  filter: none;
   transition:
     opacity   var(--stagger-dur) var(--stagger-ease),
     transform var(--stagger-dur) var(--stagger-ease),
@@ -208,21 +206,8 @@
 }
 /* Shimmer sweeps the glyphs only (background-clip: text). */
 .t-think-text::before {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: linear-gradient(90deg,
-    transparent 0%, transparent 40%,
-    var(--think-highlight) 50%,
-    transparent 60%, transparent 100%);
-  background-size: 400% 100%;
-  background-repeat: no-repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  animation: t-think-shimmer var(--think-shimmer) linear infinite;
+  content: none;
+  display: none;
 }
 @keyframes t-think-shimmer {
   0%   { background-position: 100% 0; }
@@ -231,13 +216,13 @@
 /* The outgoing line floats over the box so both halves animate. */
 .t-think-text.is-exit {
   transform: translateY(calc(var(--think-distance) * -1));
-  filter: blur(var(--think-blur));
+  filter: none;
   opacity: 0;
 }
 .t-think-text.is-enter-start {
   transition: none;
   transform: translateY(var(--think-distance));
-  filter: blur(var(--think-blur));
+  filter: none;
   opacity: 0;
 }
 
@@ -250,7 +235,7 @@
 .t-toast {
   opacity: 0;
   transform: translateY(var(--toast-distance)) scale(var(--toast-scale));
-  filter: blur(var(--toast-blur));
+  filter: none;
   will-change: transform, opacity, filter;
   transition:
     opacity var(--toast-close) var(--toast-ease),
@@ -278,3 +263,11 @@
 .t-think { display: inline-flex; min-width: 14rem; justify-content: center; }
 .t-toast { pointer-events: none; }
 .t-success-check svg path { stroke-dasharray: 36; stroke-dashoffset: 36; }
+
+
+/* Brandon hard bar — no gradient chrome / no motion blur */
+.t-think-text::before { display: none !important; }
+.t-reel-col { -webkit-mask-image: none !important; mask-image: none !important; }
+.t-panel-slide, .t-stagger-line, .t-think-text, .t-toast {
+  filter: none !important;
+}

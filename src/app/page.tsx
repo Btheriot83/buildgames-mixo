@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { initDb, listProjects } from "@/lib/db";
+import { getSampleProject } from "@/lib/sample";
 import { CreateFlow } from "@/components/CreateFlow";
 import { ProjectList } from "@/components/ProjectList";
+import { PagePreview } from "@/components/PagePreview";
 import { HeroReveal } from "@/components/transitions/HeroReveal";
 
 export const dynamic = "force-dynamic";
@@ -9,15 +11,40 @@ export const dynamic = "force-dynamic";
 export default async function HomePage() {
   await initDb();
   const projects = listProjects();
+  const demoProof = projects.find((p) => p.isSample) ?? getSampleProject();
 
   return (
-    <div className="home-shell home-shell--billboard">
+    <div className="home-shell home-shell--billboard home-shell--r2">
       <div className="acid-tape" aria-hidden>
         <span>MAKE-READY</span>
         <span>QUOIN LOCK</span>
         <span>HOT METAL</span>
         <span>PROOF DESK</span>
       </div>
+
+      <ol className="job-ladder" aria-label="Product job in three steps">
+        <li>
+          <span className="job-n">1</span>
+          <strong>Brief</strong>
+          <em>One sentence</em>
+        </li>
+        <li className="job-arrow" aria-hidden>
+          →
+        </li>
+        <li>
+          <span className="job-n">2</span>
+          <strong>Stamp landing</strong>
+          <em>Editable sections</em>
+        </li>
+        <li className="job-arrow" aria-hidden>
+          →
+        </li>
+        <li>
+          <span className="job-n">3</span>
+          <strong>Export HTML</strong>
+          <em>Static files</em>
+        </li>
+      </ol>
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="reg-mark tl" src="/textures/reg-marks.svg" alt="" />
@@ -38,8 +65,8 @@ export default async function HomePage() {
             <div>
               <strong>Hot Metal Press</strong>
               <p className="home-meta">
-                <span>One prompt</span>
-                <span>Stamped sections</span>
+                <span>Brief</span>
+                <span>Stamp landing</span>
                 <span>Export HTML</span>
               </p>
             </div>
@@ -48,12 +75,12 @@ export default async function HomePage() {
           <HeroReveal
             title={
               <>
-                Write the brief.
+                One brief.
                 <br />
-                Pull the proof.
+                A stamped page.
               </>
             }
-            lede="Type what the page is for. We lock hero, features, proof, and CTA you can edit — then stamp static HTML or a ZIP."
+            lede="Type what the business does. We lock hero, features, proof, and CTA you can edit — then stamp static HTML or a ZIP. Same job as Mixo, print-shop desk."
           />
 
           <section
@@ -65,8 +92,18 @@ export default async function HomePage() {
           </section>
         </div>
 
-        <aside className="billboard-materials" aria-hidden>
-          <figure className="billboard-proof">
+        <aside className="billboard-materials" aria-label="Demo stamped landing">
+          <div className="home-demo-preview">
+            <div className="home-demo-preview-head">
+              <span className="mono-tag">Demo proof on the bed</span>
+              <strong>{demoProof.brief.productName}</strong>
+              <em>{demoProof.brief.tagline}</em>
+            </div>
+            <div className="home-demo-preview-frame">
+              <PagePreview project={demoProof} viewport="tablet" />
+            </div>
+          </div>
+          <figure className="billboard-proof billboard-proof--compact">
             <Image
               src="/textures/imagine/proof-sheet.png"
               alt=""
@@ -77,18 +114,6 @@ export default async function HomePage() {
             />
             <figcaption>Pulled proof · Imagine plate</figcaption>
           </figure>
-          <div className="ink-video ink-video--billboard">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/textures/imagine/quoin-lock.png"
-            >
-              <source src="/textures/ink-loop.mp4" type="video/mp4" />
-            </video>
-            <p className="ink-video-caption">Ink film · make-ready loop</p>
-          </div>
         </aside>
       </div>
 

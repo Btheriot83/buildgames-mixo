@@ -27,7 +27,8 @@ describe("data model + generate workflow", () => {
     const list = db.listProjects();
     expect(list.length).toBeGreaterThanOrEqual(1);
     expect(list[0].isSample).toBe(true);
-    expect(list[0].title).toMatch(/SAMPLE/i);
+    expect(list[0].title).toMatch(/demo|SAMPLE/i);
+    expect(list[0].brief.productName).toMatch(/Diesel|Desert/i);
 
     const created = db.createProject({
       title: "Test Co",
@@ -66,5 +67,16 @@ describe("data model + generate workflow", () => {
       expect.arrayContaining(["hero", "features", "cta", "footer"])
     );
     expect(result.theme).toMatch(/hot-metal|night-press|proof-sheet/);
+  });
+
+  it("generateLocal crafts Phoenix diesel CTAs", async () => {
+    const { generateLocal, briefFromIdea } = await import("../../src/lib/generate");
+    const brief = briefFromIdea(
+      "Phoenix mobile diesel repair — book a bay, see the East Valley service map, call from the hero"
+    );
+    expect(brief.audience).toMatch(/Maricopa|Fleet/i);
+    const result = generateLocal(brief);
+    const hero = result.sections.find((s) => s.type === "hero");
+    expect(hero && "primaryCta" in hero && hero.primaryCta).toMatch(/bay|Book/i);
   });
 });
