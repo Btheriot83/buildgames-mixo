@@ -150,3 +150,10 @@
 - vs target: light head with body type instead of ink bar
 - verdict: Right column quieter; Mixo mock window still softer.
 - commit: 7e2418f
+
+## r18 — buttons CTA sole loud (dream)
+- files: src/app/globals.css
+- shot: gauntlet/shots-r4/r18-cta-chips.png
+- vs target: meter hidden; chips quieter; Stamp landing sole loud control
+- verdict: Closer to Mixo one-CTA fantasy under Quoin acid.
+- commit: 6e1c1f0
