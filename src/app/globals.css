@@ -1255,3 +1255,14 @@ body {
   color: var(--ink);
   border-color: var(--ink);
 }
+
+/* r7 — bar gap: acid tape quieter (Mixo top nav is calm) */
+.home-shell--r4 .acid-tape {
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 6px 18px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  border-bottom-width: 2px;
+}
+.home-shell--r4 .acid-tape span:nth-child(n+3) { display: none; }

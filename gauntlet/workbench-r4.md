@@ -56,3 +56,9 @@
 - shot: gauntlet/shots-r4/r6-ghost-quieter.png
 - verdict: Use five lines recedes; Stamp landing dominates — Mixo Log in vs Get Started pattern closer.
 - commit: 6852967
+
+## r7 — bar gap acid tape quieter
+- files: src/app/globals.css
+- shot: gauntlet/shots-r4/r7-acid-tape-quiet.png
+- verdict: Top strip half as busy (2 labels); Mixo still wins empty whitespace above hero.
+- commit: 74f59ea
