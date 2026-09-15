@@ -1175,3 +1175,19 @@ body {
   .create-actions { flex-wrap: wrap; }
   .create-actions .btn-acid { width: 100%; }
 }
+
+
+/* ========================================================================
+   Phase B4 INTEGRITY — counted rounds (Quoin Lock LOCKED · flat · vs Mixo)
+   ======================================================================== */
+
+/* r1 — fonts: brand lockup sentence-case Plex (kill uppercase AI shout) */
+.home-shell--r4 .brand-lockup--lg strong,
+.home-shell--r4 .brand-lockup strong {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--ink);
+}

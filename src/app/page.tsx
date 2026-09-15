@@ -14,7 +14,7 @@ export default async function HomePage() {
   const demoProof = projects.find((p) => p.isSample) ?? getSampleProject();
 
   return (
-    <div className="home-shell home-shell--billboard home-shell--r2 home-shell--r3">
+    <div className="home-shell home-shell--billboard home-shell--r2 home-shell--r3 home-shell--r4">
       <div className="acid-tape" aria-hidden>
         <span>MAKE-READY</span>
         <span>QUOIN LOCK</span>
