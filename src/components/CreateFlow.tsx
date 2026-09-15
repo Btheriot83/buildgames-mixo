@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import type { Brief } from "@/lib/types";
+import { SpinningCounter } from "./transitions/SpinningCounter";
+import { ThinkingLine } from "./transitions/ThinkingLine";
 
 const STEPS = [
   { key: "productName", label: "Name the forme", hint: "Product or page name", placeholder: "Letterpress Co" },
@@ -38,7 +40,6 @@ export function CreateFlow() {
   const progress = ((step + 1) / (STEPS.length + 1)) * 100;
 
   function next() {
-    // Read from DOM to avoid controlled-input races under automation
     const el = document.getElementById("brief-field") as HTMLTextAreaElement | null;
     const live = (el?.value ?? value).trim();
     if (!live) {
@@ -49,7 +50,7 @@ export function CreateFlow() {
     setBrief((b) => ({ ...b, [key]: live }));
     setError(null);
     if (step < STEPS.length - 1) setStep(step + 1);
-    else void submitWith( { ...brief, [key]: live } );
+    else void submitWith({ ...brief, [key]: live });
   }
 
   async function submitWith(finalBrief: Brief) {
@@ -64,7 +65,7 @@ export function CreateFlow() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Press jammed");
-      await new Promise((r) => setTimeout(r, 700));
+      await new Promise((r) => setTimeout(r, 1400));
       router.push(`/projects/${data.project.id}`);
     } catch (e) {
       setPressing(false);
@@ -74,12 +75,16 @@ export function CreateFlow() {
     }
   }
 
-
   return (
     <div className="create-flow" aria-label="Create landing page">
       <div className="press-meter" aria-hidden>
         <div className="press-meter-fill" style={{ width: `${progress}%` }} />
-        <span>FORME {String(step + 1).padStart(2, "0")} / {String(STEPS.length).padStart(2, "0")}</span>
+        <span className="press-meter-label">
+          FORME{" "}
+          <SpinningCounter value={step + 1} pad={2} />
+          {" / "}
+          {String(STEPS.length).padStart(2, "0")}
+        </span>
       </div>
 
       <AnimatePresence mode="wait">
@@ -93,7 +98,9 @@ export function CreateFlow() {
           >
             <div className="press-ram" aria-hidden />
             <p className="pressing-title">Pulling proof…</p>
-            <p className="muted">Locking sections · inking type · registering marks</p>
+            <p className="muted">
+              <ThinkingLine active={pressing} />
+            </p>
           </motion.div>
         ) : (
           <motion.div
@@ -149,8 +156,8 @@ export function CreateFlow() {
                 {step === STEPS.length - 1
                   ? loading
                     ? "Inking…"
-                    : "Stamp & generate"
-                  : "Lock line"}
+                    : "Pull proof"
+                  : "Next line"}
               </button>
             </div>
           </motion.div>
