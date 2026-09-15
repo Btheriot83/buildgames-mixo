@@ -73,7 +73,7 @@ export function CreateFlow() {
       <div className="press-meter" aria-hidden>
         <div className="press-meter-fill" style={{ width: pressing ? "100%" : "18%" }} />
         <span className="press-meter-label">
-          {pressing ? "STAMPING LANDING" : "ONE BRIEF → STAMP → EXPORT HTML"}
+          {pressing ? "Stamping landing…" : "One brief → stamp → export HTML"}
         </span>
       </div>
 

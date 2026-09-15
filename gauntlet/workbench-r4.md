@@ -25,3 +25,9 @@
 - shot: gauntlet/shots-r4/r1-brand-fonts.png
 - verdict: Mixo still cleaner overall; our brand no longer shouts uppercase mono — spottable in 3s under Quoin Lock.
 - commit: 06eb227
+
+## r2 — fonts press meter
+- files: src/app/globals.css, src/components/CreateFlow.tsx
+- shot: gauntlet/shots-r4/r2-press-meter-fonts.png
+- verdict: Meter reads as UI copy not all-caps mono shout; Mixo still quieter chrome overall.
+- commit: a0afd4a

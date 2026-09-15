@@ -1191,3 +1191,17 @@ body {
   text-transform: none;
   color: var(--ink);
 }
+
+/* r2 — fonts: press meter sentence-case body (less shouty mono) */
+.home-shell--r4 .press-meter {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  height: 34px;
+}
+.home-shell--r4 .press-meter-label {
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
